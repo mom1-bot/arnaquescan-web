@@ -81,9 +81,6 @@ export function PricingSection() {
               </span>
             </button>
           </div>
-          <p className="text-[11px] text-gray-400 mt-3">
-            Le tarif annuel s'applique à l'offre Premium
-          </p>
         </div>
 
         {/* Cards */}
@@ -209,9 +206,17 @@ export function PricingSection() {
             <div className="mb-6 pt-2">
               <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Pro</p>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-4xl font-black text-gray-900">4,99€</span>
+                <span className="text-4xl font-black text-gray-900">
+                  {annual ? "3,33€" : "4,99€"}
+                </span>
                 <span className="text-sm text-gray-400">/mois</span>
               </div>
+              {annual && (
+                <p className="text-sm text-gray-500 mt-0.5">
+                  facturé <strong className="text-gray-700">39,99€/an</strong>
+                  <span className="ml-1.5 text-green text-xs font-bold">−33% vs mensuel</span>
+                </p>
+              )}
               <p className="text-sm text-gray-500 mt-2">Pour développeurs et entreprises</p>
               <p className="text-[11px] text-warning font-semibold mt-2 flex items-center gap-1.5">
                 <span>⏳</span>
@@ -251,9 +256,17 @@ export function PricingSection() {
             <div className="mb-6 pt-2">
               <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Famille</p>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-4xl font-black text-gray-900">9,99€</span>
+                <span className="text-4xl font-black text-gray-900">
+                  {annual ? "6,67€" : "9,99€"}
+                </span>
                 <span className="text-sm text-gray-400">/mois</span>
               </div>
+              {annual && (
+                <p className="text-sm text-gray-500 mt-0.5">
+                  facturé <strong className="text-gray-700">79,99€/an</strong>
+                  <span className="ml-1.5 text-green text-xs font-bold">−33% vs mensuel</span>
+                </p>
+              )}
               <p className="text-sm text-gray-500 mt-2">Protégez toute la famille</p>
               <p className="text-[11px] text-warning font-semibold mt-2 flex items-center gap-1.5">
                 <span>⏳</span>
