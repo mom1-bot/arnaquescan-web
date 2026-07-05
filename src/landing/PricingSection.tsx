@@ -195,14 +195,28 @@ export function PricingSection() {
           </div>
 
           {/* Pro */}
-          <div className="bg-gray-50 border border-gray-200 rounded-3xl p-7 flex flex-col">
-            <div className="mb-6">
+          <div className="relative bg-gray-50 border border-gray-200 rounded-3xl p-7 flex flex-col">
+            {/* Launch offer badge */}
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+              <span
+                className="text-white text-xs font-black px-5 py-1.5 rounded-full whitespace-nowrap"
+                style={{ background: "linear-gradient(135deg, #D8453F, #B53530)", boxShadow: "0 4px 12px rgba(216,69,63,0.35)" }}
+              >
+                🔥 Offre de lancement
+              </span>
+            </div>
+
+            <div className="mb-6 pt-2">
               <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Pro</p>
               <div className="flex items-baseline gap-1.5">
                 <span className="text-4xl font-black text-gray-900">4,99€</span>
                 <span className="text-sm text-gray-400">/mois</span>
               </div>
               <p className="text-sm text-gray-500 mt-2">Pour développeurs et entreprises</p>
+              <p className="text-[11px] text-warning font-semibold mt-2 flex items-center gap-1.5">
+                <span>⏳</span>
+                Prix de lancement — sera revu prochainement
+              </p>
             </div>
 
             <ul className="space-y-3 flex-1 mb-7">
@@ -223,14 +237,28 @@ export function PricingSection() {
           </div>
 
           {/* Famille */}
-          <div className="bg-gray-50 border border-gray-200 rounded-3xl p-7 flex flex-col">
-            <div className="mb-6">
+          <div className="relative bg-gray-50 border border-gray-200 rounded-3xl p-7 flex flex-col">
+            {/* Launch offer badge */}
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+              <span
+                className="text-white text-xs font-black px-5 py-1.5 rounded-full whitespace-nowrap"
+                style={{ background: "linear-gradient(135deg, #D8453F, #B53530)", boxShadow: "0 4px 12px rgba(216,69,63,0.35)" }}
+              >
+                🔥 Offre de lancement
+              </span>
+            </div>
+
+            <div className="mb-6 pt-2">
               <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Famille</p>
               <div className="flex items-baseline gap-1.5">
                 <span className="text-4xl font-black text-gray-900">9,99€</span>
                 <span className="text-sm text-gray-400">/mois</span>
               </div>
               <p className="text-sm text-gray-500 mt-2">Protégez toute la famille</p>
+              <p className="text-[11px] text-warning font-semibold mt-2 flex items-center gap-1.5">
+                <span>⏳</span>
+                Prix de lancement — sera revu prochainement
+              </p>
             </div>
 
             <ul className="space-y-3 flex-1 mb-7">
