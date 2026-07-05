@@ -16,12 +16,28 @@ const PREMIUM_FEATURES = [
   "Support prioritaire",
 ];
 
+const PRO_FEATURES = [
+  "Tout Premium, plus :",
+  "Traitement prioritaire des analyses",
+  "Export PDF des rapports d'analyse",
+  "Accès API (développeurs/entreprises)",
+  "Support prioritaire 24h",
+];
+
+const FAMILLE_FEATURES = [
+  "Jusqu'à 5 comptes membres",
+  "Tableau de bord familial centralisé",
+  "Alertes partagées entre membres",
+  "Mode senior activé pour tous les membres",
+  "Idéal pour protéger parents et grands-parents",
+];
+
 export function PricingSection() {
   const [annual, setAnnual] = useState(false);
 
   return (
     <section id="tarifs" className="bg-white py-16 lg:py-24 scroll-mt-20">
-      <div className="max-w-5xl mx-auto px-5">
+      <div className="max-w-7xl mx-auto px-5">
 
         {/* Header */}
         <div className="text-center mb-12">
@@ -30,7 +46,7 @@ export function PricingSection() {
             Simple et transparent
           </h2>
           <p className="text-gray-500 max-w-md mx-auto">
-            Commencez gratuitement. Passez Premium quand vous en avez besoin.
+            Commencez gratuitement. Passez à l'offre qui correspond à vos besoins.
           </p>
 
           {/* Toggle */}
@@ -65,10 +81,13 @@ export function PricingSection() {
               </span>
             </button>
           </div>
+          <p className="text-[11px] text-gray-400 mt-3">
+            Le tarif annuel s'applique à l'offre Premium
+          </p>
         </div>
 
         {/* Cards */}
-        <div className="grid sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto items-stretch">
 
           {/* Free */}
           <div className="bg-gray-50 border border-gray-200 rounded-3xl p-7 flex flex-col">
@@ -173,6 +192,62 @@ export function PricingSection() {
             <p className="text-center text-[10px] text-gray-400 mt-2.5">
               Annulation possible à tout moment
             </p>
+          </div>
+
+          {/* Pro */}
+          <div className="bg-gray-50 border border-gray-200 rounded-3xl p-7 flex flex-col">
+            <div className="mb-6">
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Pro</p>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-4xl font-black text-gray-900">4,99€</span>
+                <span className="text-sm text-gray-400">/mois</span>
+              </div>
+              <p className="text-sm text-gray-500 mt-2">Pour développeurs et entreprises</p>
+            </div>
+
+            <ul className="space-y-3 flex-1 mb-7">
+              {PRO_FEATURES.map((f) => (
+                <li key={f} className="flex items-start gap-2.5 text-sm text-gray-600">
+                  <span className="mt-0.5 w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center shrink-0 text-gray-500 text-[9px] font-black">✓</span>
+                  {f}
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href="https://apps.apple.com"
+              className="block text-center py-3.5 text-sm font-bold text-gray-600 border-2 border-gray-200 rounded-xl hover:border-gray-300 transition-colors"
+            >
+              Choisir Pro
+            </a>
+          </div>
+
+          {/* Famille */}
+          <div className="bg-gray-50 border border-gray-200 rounded-3xl p-7 flex flex-col">
+            <div className="mb-6">
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Famille</p>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-4xl font-black text-gray-900">9,99€</span>
+                <span className="text-sm text-gray-400">/mois</span>
+              </div>
+              <p className="text-sm text-gray-500 mt-2">Protégez toute la famille</p>
+            </div>
+
+            <ul className="space-y-3 flex-1 mb-7">
+              {FAMILLE_FEATURES.map((f) => (
+                <li key={f} className="flex items-start gap-2.5 text-sm text-gray-600">
+                  <span className="mt-0.5 w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center shrink-0 text-gray-500 text-[9px] font-black">✓</span>
+                  {f}
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href="https://apps.apple.com"
+              className="block text-center py-3.5 text-sm font-bold text-gray-600 border-2 border-gray-200 rounded-xl hover:border-gray-300 transition-colors"
+            >
+              Choisir Famille
+            </a>
           </div>
         </div>
 

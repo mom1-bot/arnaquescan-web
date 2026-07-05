@@ -5,7 +5,7 @@ const STATS = [
     color: "#D8453F",
   },
   {
-    value: "1 Français sur 3",
+    value: "1 personne sur 3",
     label: "ciblé par une tentative d'arnaque chaque année",
     color: "#E88500",
   },
