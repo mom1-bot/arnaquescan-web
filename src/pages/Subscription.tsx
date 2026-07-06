@@ -158,9 +158,9 @@ export default function Subscription() {
               <p className="text-sm text-gray-500 mt-2">
                 🎁 <strong>7 jours d'essai gratuit</strong> — sans CB
               </p>
-              <p className="text-[11px] text-warning font-semibold mt-2 flex items-center gap-1.5">
+              <p className="whitespace-normal text-xs md:text-sm text-warning font-semibold mt-2 flex items-start gap-1.5">
                 <span>⏳</span>
-                Prix de lancement — sera revu prochainement
+                Tarif de lancement temporaire
               </p>
             </div>
 
@@ -218,9 +218,9 @@ export default function Subscription() {
                 </p>
               )}
               <p className="text-sm text-gray-500 mt-2">Pour développeurs et entreprises</p>
-              <p className="text-[11px] text-warning font-semibold mt-2 flex items-center gap-1.5">
+              <p className="whitespace-normal text-xs md:text-sm text-warning font-semibold mt-2 flex items-start gap-1.5">
                 <span>⏳</span>
-                Prix de lancement — sera revu prochainement
+                Tarif de lancement temporaire
               </p>
             </div>
 
@@ -268,9 +268,9 @@ export default function Subscription() {
                 </p>
               )}
               <p className="text-sm text-gray-500 mt-2">Protégez toute la famille</p>
-              <p className="text-[11px] text-warning font-semibold mt-2 flex items-center gap-1.5">
+              <p className="whitespace-normal text-xs md:text-sm text-warning font-semibold mt-2 flex items-start gap-1.5">
                 <span>⏳</span>
-                Prix de lancement — sera revu prochainement
+                Tarif de lancement temporaire
               </p>
             </div>
 
