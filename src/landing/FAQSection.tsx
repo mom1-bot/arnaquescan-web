@@ -1,44 +1,23 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-
-const FAQ = [
-  {
-    q: "Comment mes données sont-elles protégées ?",
-    a: "Vos données sont chiffrées en transit via HTTPS/TLS et ne sont jamais stockées sur nos serveurs au-delà de la durée de l'analyse. ArnaqueScan est conforme au RGPD : aucune donnée personnelle n'est partagée avec des tiers. Chaque analyse est traitée de manière anonymisée et sécurisée.",
-  },
-  {
-    q: "Comment l'IA détecte-t-elle les arnaques ?",
-    a: "ArnaqueScan utilise Claude d'Anthropic — l'un des modèles d'IA les plus avancés au monde — pour analyser chaque message selon plus de 30 critères : structure et ton du message, urgence artificielle, fautes de grammaire typiques de la traduction automatique, URLs suspectes (typosquatting, domaines douteux, raccourcisseurs), numéros surtaxés, demandes inhabituelles d'informations personnelles ou bancaires, usurpation d'identité de marques connues, etc. L'analyse est contextuelle : l'IA comprend le sens du message, pas uniquement des mots-clés.",
-  },
-  {
-    q: "Puis-je annuler mon abonnement facilement ?",
-    a: "Oui, absolument. L'abonnement Premium est géré entièrement par l'App Store d'Apple. Vous pouvez l'annuler à tout moment depuis Réglages → [votre prénom] → Abonnements → ArnaqueScan. Aucune pénalité, aucun délai. Vous conservez l'accès Premium jusqu'à la fin de la période déjà payée.",
-  },
-  {
-    q: "L'app fonctionne-t-elle sur Android ?",
-    a: "ArnaqueScan sera bientôt disponible sur iOS et Android (iPhone et iPad, iOS 17+). Inscrivez-vous sur notre site pour être notifié dès la sortie. En attendant, vous pouvez utiliser la version web à l'adresse arnaquescan.vercel.app depuis n'importe quel navigateur.",
-  },
-  {
-    q: "Pourquoi la marque est-elle déposée à l'INPI ?",
-    a: "La marque ArnaqueScan est officiellement déposée à l'INPI (Institut National de la Propriété Industrielle) sous les classes 9 (logiciels, applications mobiles) et 42 (services informatiques, cybersécurité, SaaS). Ce dépôt protège la marque contre les imitateurs et garantit que vous utilisez l'application authentique. Dans un domaine où des faux outils anti-arnaque circulent pour piéger les utilisateurs, ce certificat officiel est un gage concret de sérieux et de légitimité.",
-  },
-];
-
-const FAQ_JSON_LD = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": FAQ.map(({ q, a }) => ({
-    "@type": "Question",
-    "name": q,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": a,
-    },
-  })),
-};
+import { useLanguage } from "../hooks/useLanguage";
 
 export function FAQSection() {
+  const { t } = useLanguage();
   const [open, setOpen] = useState<number | null>(0);
+
+  const FAQ_JSON_LD = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": t.faq.items.map(({ q, a }) => ({
+      "@type": "Question",
+      "name": q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": a,
+      },
+    })),
+  };
 
   return (
     <section id="faq" className="bg-sand py-16 lg:py-24">
@@ -51,15 +30,15 @@ export function FAQSection() {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <p className="text-[11px] font-bold tracking-widest uppercase text-gray-400 mb-3">FAQ</p>
+          <p className="text-[11px] font-bold tracking-widest uppercase text-gray-400 mb-3">{t.faq.label}</p>
           <h2 className="text-3xl sm:text-4xl font-black text-gray-900">
-            Questions fréquentes
+            {t.faq.title}
           </h2>
         </div>
 
         {/* Accordion */}
         <div className="space-y-3">
-          {FAQ.map((item, i) => {
+          {t.faq.items.map((item, i) => {
             const isOpen = open === i;
             return (
               <div
@@ -98,9 +77,9 @@ export function FAQSection() {
         {/* Bottom nudge */}
         <div className="text-center mt-10">
           <p className="text-sm text-gray-500">
-            Une autre question ?{" "}
+            {t.faq.otherQuestion}{" "}
             <a href="mailto:contact@arnaquescan.fr" className="text-blue hover:underline font-medium">
-              Contactez-nous
+              {t.faq.contactUs}
             </a>
           </p>
         </div>

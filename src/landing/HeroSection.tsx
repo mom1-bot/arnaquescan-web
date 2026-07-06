@@ -1,4 +1,5 @@
 import { IPhoneMockup } from "./IPhoneMockup";
+import { useLanguage } from "../hooks/useLanguage";
 
 function HeroScreen() {
   return (
@@ -67,6 +68,7 @@ function HeroScreen() {
 }
 
 export function HeroSection() {
+  const { t } = useLanguage();
   const scrollToPricing = () =>
     document.getElementById("tarifs")?.scrollIntoView({ behavior: "smooth" });
 
@@ -94,13 +96,13 @@ export function HeroSection() {
                 style={{ boxShadow: "0 0 0 3px rgba(46,158,91,0.2)" }}
               />
               <span className="text-xs font-semibold text-gray-600">
-                Bientôt disponible sur App Store · Marque déposée INPI
+                {t.hero.badge}
               </span>
             </div>
 
             {/* H1 */}
             <h1 className="text-[40px] sm:text-5xl lg:text-[54px] font-black text-gray-900 leading-[1.08] tracking-tight mb-5 max-w-xl mx-auto lg:mx-0">
-              Protégez vos proches et vos données contre{" "}
+              {t.hero.titlePre}{" "}
               <span
                 style={{
                   background: "linear-gradient(135deg, #1A6FC4 0%, #1254A0 100%)",
@@ -109,15 +111,14 @@ export function HeroSection() {
                   backgroundClip: "text",
                 }}
               >
-                les arnaques
+                {t.hero.titleHighlight}
               </span>{" "}
-              en un clic.
+              {t.hero.titlePost}
             </h1>
 
             {/* H2 */}
             <p className="text-lg sm:text-xl text-gray-500 leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0">
-              ArnaqueScan détecte les SMS frauduleux, les e-mails de phishing et les
-              sites suspects en temps réel grâce à l'IA.
+              {t.hero.subtitle}
             </p>
 
             {/* Store badges */}
@@ -129,8 +130,8 @@ export function HeroSection() {
               >
                 <span className="text-[22px] leading-none grayscale opacity-60">📲</span>
                 <div className="text-left">
-                  <div className="text-[10px] text-gray-400 font-normal leading-none mb-0.5">Bientôt sur</div>
-                  <div className="text-sm font-semibold leading-none">App Store</div>
+                  <div className="text-[10px] text-gray-400 font-normal leading-none mb-0.5">{t.hero.soonOn}</div>
+                  <div className="text-sm font-semibold leading-none">{t.hero.appStore}</div>
                 </div>
               </div>
               {/* Google Play (bientôt) */}
@@ -140,8 +141,8 @@ export function HeroSection() {
               >
                 <span className="text-[22px] leading-none grayscale opacity-60">🤖</span>
                 <div className="text-left">
-                  <div className="text-[10px] text-gray-400 font-normal leading-none mb-0.5">Bientôt sur</div>
-                  <div className="text-sm font-semibold leading-none">Google Play</div>
+                  <div className="text-[10px] text-gray-400 font-normal leading-none mb-0.5">{t.hero.soonOn}</div>
+                  <div className="text-sm font-semibold leading-none">{t.hero.googlePlay}</div>
                 </div>
               </div>
             </div>
@@ -152,14 +153,14 @@ export function HeroSection() {
                 onClick={scrollToPricing}
                 className="flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-blue transition-colors"
               >
-                Voir les tarifs
+                {t.hero.pricingLink}
                 <span className="text-xs">↓</span>
               </button>
             </div>
 
             {/* Reassurance line */}
             <p className="text-xs text-gray-400 text-center lg:text-left mb-8 leading-relaxed">
-              🔒 Sans engagement — Version gratuite disponible — Conforme RGPD
+              🔒 {t.hero.reassurance}
             </p>
 
             {/* Social proof */}
@@ -181,7 +182,7 @@ export function HeroSection() {
                 ))}
               </div>
               <span className="text-gray-500">
-                <strong className="text-gray-900">500+</strong> utilisateurs protégés
+                <strong className="text-gray-900">500+</strong> {t.hero.socialProofUsers}
               </span>
               <span className="text-yellow-400 font-bold">★ 4.8 / 5</span>
             </div>

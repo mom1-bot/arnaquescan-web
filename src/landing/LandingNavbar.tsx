@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { LogoIcon } from "../components/LogoIcon";
-
-const NAV_LINKS = [
-  { label: "Fonctionnalités", id: "fonctionnalites" },
-  { label: "Tarifs",          id: "tarifs"          },
-  { label: "FAQ",             id: "faq"             },
-];
+import { LanguageSwitcher } from "../components/LanguageSwitcher";
+import { useLanguage } from "../hooks/useLanguage";
 
 export function LandingNavbar() {
+  const { t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen]         = useState(false);
+
+  const NAV_LINKS = [
+    { label: t.nav.features, id: "fonctionnalites" },
+    { label: t.nav.pricing,  id: "tarifs"          },
+    { label: t.nav.faq,      id: "faq"             },
+  ];
 
   useEffect(() => {
     const handle = () => setScrolled(window.scrollY > 50);
@@ -58,7 +61,7 @@ export function LandingNavbar() {
             to="/auth"
             className="text-sm font-medium text-gray-600 hover:text-blue transition-colors"
           >
-            Se connecter
+            {t.nav.login}
           </Link>
           <div className="flex flex-col items-center gap-0.5">
             <div
@@ -66,22 +69,26 @@ export function LandingNavbar() {
               title="En attente de validation par Apple"
             >
               <span className="text-[17px] leading-none grayscale opacity-60">📲</span>
-              <span>Bientôt sur l'App Store</span>
+              <span>{t.nav.appStoreSoon}</span>
             </div>
-            <span className="text-[9px] text-gray-400 font-medium">🤖 Android bientôt</span>
+            <span className="text-[9px] text-gray-400 font-medium">🤖 {t.nav.androidSoon}</span>
           </div>
+          <LanguageSwitcher />
         </div>
 
         {/* Mobile hamburger */}
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-[5px]"
-          aria-label="Menu"
-        >
-          <span className={`block h-[2px] w-5 bg-gray-700 transition-all origin-center ${open ? "rotate-45 translate-y-[7px]" : ""}`} />
-          <span className={`block h-[2px] w-5 bg-gray-700 transition-opacity ${open ? "opacity-0" : ""}`} />
-          <span className={`block h-[2px] w-5 bg-gray-700 transition-all origin-center ${open ? "-rotate-45 -translate-y-[7px]" : ""}`} />
-        </button>
+        <div className="flex md:hidden items-center gap-2">
+          <LanguageSwitcher />
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="flex flex-col justify-center items-center w-10 h-10 gap-[5px]"
+            aria-label="Menu"
+          >
+            <span className={`block h-[2px] w-5 bg-gray-700 transition-all origin-center ${open ? "rotate-45 translate-y-[7px]" : ""}`} />
+            <span className={`block h-[2px] w-5 bg-gray-700 transition-opacity ${open ? "opacity-0" : ""}`} />
+            <span className={`block h-[2px] w-5 bg-gray-700 transition-all origin-center ${open ? "-rotate-45 -translate-y-[7px]" : ""}`} />
+          </button>
+        </div>
       </div>
 
       {/* Mobile drawer */}
@@ -104,13 +111,13 @@ export function LandingNavbar() {
               onClick={() => setOpen(false)}
               className="block text-center py-3 text-sm font-medium text-gray-700 border border-gray-200 rounded-xl"
             >
-              Se connecter
+              {t.nav.login}
             </Link>
             <div className="flex items-center justify-center gap-2 bg-gray-100 text-gray-400 py-3 rounded-xl cursor-not-allowed select-none text-sm font-medium">
-              📲 Bientôt sur l'App Store
+              📲 {t.nav.appStoreSoon}
             </div>
             <div className="flex items-center justify-center gap-2 bg-gray-100 text-gray-400 py-3 rounded-xl cursor-not-allowed select-none text-sm font-medium">
-              🤖 Bientôt sur Google Play
+              🤖 {t.nav.googlePlaySoon}
             </div>
           </div>
         </div>
