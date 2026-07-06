@@ -94,7 +94,7 @@ export function HeroSection() {
                 style={{ boxShadow: "0 0 0 3px rgba(46,158,91,0.2)" }}
               />
               <span className="text-xs font-semibold text-gray-600">
-                Disponible sur App Store · Marque déposée INPI
+                Bientôt disponible sur App Store · Marque déposée INPI
               </span>
             </div>
 
@@ -122,18 +122,17 @@ export function HeroSection() {
 
             {/* Store badges */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-4">
-              {/* App Store */}
-              <a
-                href="https://apps.apple.com"
-                className="flex items-center gap-3 bg-gray-900 hover:bg-gray-800 text-white px-6 py-3.5 rounded-2xl font-medium transition-all justify-center"
-                style={{ boxShadow: "0 8px 24px rgba(0,0,0,0.22)" }}
+              {/* App Store (bientôt) */}
+              <div
+                className="flex items-center gap-3 bg-gray-100 text-gray-400 px-6 py-3.5 rounded-2xl font-medium cursor-not-allowed select-none"
+                title="En attente de validation par Apple"
               >
-                <span className="text-[22px] leading-none">📲</span>
+                <span className="text-[22px] leading-none grayscale opacity-60">📲</span>
                 <div className="text-left">
-                  <div className="text-[10px] text-white/60 font-normal leading-none mb-0.5">Télécharger sur</div>
-                  <div className="text-sm font-bold leading-none">App Store</div>
+                  <div className="text-[10px] text-gray-400 font-normal leading-none mb-0.5">Bientôt sur</div>
+                  <div className="text-sm font-semibold leading-none">App Store</div>
                 </div>
-              </a>
+              </div>
               {/* Google Play (bientôt) */}
               <div
                 className="flex items-center gap-3 bg-gray-100 text-gray-400 px-6 py-3.5 rounded-2xl font-medium cursor-not-allowed select-none"

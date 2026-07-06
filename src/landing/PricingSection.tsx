@@ -114,12 +114,12 @@ export function PricingSection() {
               </li>
             </ul>
 
-            <a
-              href="https://apps.apple.com"
-              className="block text-center py-3.5 text-sm font-bold text-gray-600 border-2 border-gray-200 rounded-xl hover:border-gray-300 transition-colors"
+            <button
+              disabled
+              className="block w-full text-center py-3.5 text-sm font-bold text-gray-400 bg-gray-100 rounded-xl cursor-not-allowed"
             >
-              Télécharger gratuitement
-            </a>
+              Bientôt disponible
+            </button>
           </div>
 
           {/* Premium */}
@@ -176,16 +176,16 @@ export function PricingSection() {
               ))}
             </ul>
 
-            <a
-              href="https://apps.apple.com"
-              className="block text-center py-3.5 text-sm font-bold text-white rounded-xl transition-all"
+            <button
+              disabled
+              className="block w-full text-center py-3.5 text-sm font-bold text-white rounded-xl cursor-not-allowed opacity-60"
               style={{
                 background: "linear-gradient(135deg, #1A6FC4, #1254A0)",
                 boxShadow: "0 6px 20px rgba(26,111,196,0.32)",
               }}
             >
-              Commencer l'essai gratuit →
-            </a>
+              Bientôt disponible
+            </button>
             <p className="text-center text-[10px] text-gray-400 mt-2.5">
               Annulation possible à tout moment
             </p>
@@ -233,12 +233,12 @@ export function PricingSection() {
               ))}
             </ul>
 
-            <a
-              href="https://apps.apple.com"
-              className="block text-center py-3.5 text-sm font-bold text-gray-600 border-2 border-gray-200 rounded-xl hover:border-gray-300 transition-colors"
+            <button
+              disabled
+              className="block w-full text-center py-3.5 text-sm font-bold text-gray-400 bg-gray-100 rounded-xl cursor-not-allowed"
             >
-              Choisir Pro
-            </a>
+              Bientôt disponible
+            </button>
           </div>
 
           {/* Famille */}
@@ -283,12 +283,12 @@ export function PricingSection() {
               ))}
             </ul>
 
-            <a
-              href="https://apps.apple.com"
-              className="block text-center py-3.5 text-sm font-bold text-gray-600 border-2 border-gray-200 rounded-xl hover:border-gray-300 transition-colors"
+            <button
+              disabled
+              className="block w-full text-center py-3.5 text-sm font-bold text-gray-400 bg-gray-100 rounded-xl cursor-not-allowed"
             >
-              Choisir Famille
-            </a>
+              Bientôt disponible
+            </button>
           </div>
         </div>
 

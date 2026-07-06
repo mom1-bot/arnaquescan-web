@@ -61,14 +61,13 @@ export function LandingNavbar() {
             Se connecter
           </Link>
           <div className="flex flex-col items-center gap-0.5">
-            <a
-              href="https://apps.apple.com"
-              className="flex items-center gap-2.5 bg-gray-900 hover:bg-gray-800 text-white pl-4 pr-5 py-2.5 rounded-xl text-sm font-semibold transition-colors"
-              style={{ boxShadow: "0 4px 14px rgba(0,0,0,0.18)" }}
+            <div
+              className="flex items-center gap-2.5 bg-gray-100 text-gray-400 pl-4 pr-5 py-2.5 rounded-xl text-sm font-semibold cursor-not-allowed select-none"
+              title="En attente de validation par Apple"
             >
-              <span className="text-[17px] leading-none">📲</span>
-              <span>App Store</span>
-            </a>
+              <span className="text-[17px] leading-none grayscale opacity-60">📲</span>
+              <span>Bientôt sur l'App Store</span>
+            </div>
             <span className="text-[9px] text-gray-400 font-medium">🤖 Android bientôt</span>
           </div>
         </div>
@@ -107,12 +106,9 @@ export function LandingNavbar() {
             >
               Se connecter
             </Link>
-            <a
-              href="https://apps.apple.com"
-              className="flex items-center justify-center gap-2 bg-gray-900 text-white py-3.5 rounded-xl text-sm font-semibold"
-            >
-              📲 Télécharger sur l'App Store
-            </a>
+            <div className="flex items-center justify-center gap-2 bg-gray-100 text-gray-400 py-3 rounded-xl cursor-not-allowed select-none text-sm font-medium">
+              📲 Bientôt sur l'App Store
+            </div>
             <div className="flex items-center justify-center gap-2 bg-gray-100 text-gray-400 py-3 rounded-xl cursor-not-allowed select-none text-sm font-medium">
               🤖 Bientôt sur Google Play
             </div>

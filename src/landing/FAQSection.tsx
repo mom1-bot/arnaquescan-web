@@ -16,7 +16,7 @@ const FAQ = [
   },
   {
     q: "L'app fonctionne-t-elle sur Android ?",
-    a: "ArnaqueScan est actuellement disponible sur iOS (iPhone et iPad, iOS 17+). Une version Android est en cours de développement et sera disponible prochainement sur Google Play. Inscrivez-vous sur notre site pour être notifié dès la sortie. En attendant, vous pouvez utiliser la version web à l'adresse arnaquescan.vercel.app depuis n'importe quel navigateur Android.",
+    a: "ArnaqueScan sera bientôt disponible sur iOS et Android (iPhone et iPad, iOS 17+). Inscrivez-vous sur notre site pour être notifié dès la sortie. En attendant, vous pouvez utiliser la version web à l'adresse arnaquescan.vercel.app depuis n'importe quel navigateur.",
   },
   {
     q: "Pourquoi la marque est-elle déposée à l'INPI ?",

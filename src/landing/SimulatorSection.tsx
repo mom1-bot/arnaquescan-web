@@ -129,18 +129,17 @@ export function SimulatorSection() {
                 <p className="text-sm text-gray-500 mb-6 max-w-xs leading-relaxed">
                   Téléchargez l'app pour voir le verdict complet et protéger vos données.
                 </p>
-                {/* App Store CTA */}
-                <a
-                  href="https://apps.apple.com"
-                  className="flex items-center gap-3 bg-gray-900 hover:bg-gray-800 text-white pl-5 pr-6 py-3.5 rounded-2xl text-sm font-bold transition-colors mb-2"
-                  style={{ boxShadow: "0 8px 24px rgba(0,0,0,0.22)" }}
+                {/* App Store (bientôt) */}
+                <div
+                  className="flex items-center gap-3 bg-gray-100 text-gray-400 pl-5 pr-6 py-3.5 rounded-2xl text-sm font-bold cursor-not-allowed select-none mb-2"
+                  title="En attente de validation par Apple"
                 >
-                  <span className="text-xl leading-none">📲</span>
+                  <span className="text-xl leading-none grayscale opacity-60">📲</span>
                   <div className="text-left">
-                    <div className="text-[9px] text-white/60 leading-none mb-0.5">Télécharger sur</div>
+                    <div className="text-[9px] text-gray-400 leading-none mb-0.5">Bientôt sur</div>
                     <div className="text-sm font-bold leading-none">App Store</div>
                   </div>
-                </a>
+                </div>
                 {/* Google Play (soon) */}
                 <div className="flex items-center gap-2.5 text-gray-400 text-xs font-medium mt-1">
                   <span className="grayscale opacity-60 text-sm">🤖</span>

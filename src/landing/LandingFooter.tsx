@@ -28,7 +28,12 @@ export function LandingFooter() {
             <div>
               <p className="text-[11px] font-bold text-gray-600 uppercase tracking-widest mb-3">Application</p>
               <ul className="space-y-2.5 text-sm">
-                <li><a href="https://apps.apple.com" className="text-gray-400 hover:text-white transition-colors">App Store</a></li>
+                <li>
+                  <span className="flex items-center gap-2 text-gray-600 cursor-not-allowed">
+                    App Store
+                    <span className="text-[9px] font-black text-gray-500 bg-gray-800 px-1.5 py-0.5 rounded uppercase tracking-wide">bientôt</span>
+                  </span>
+                </li>
                 <li>
                   <span className="flex items-center gap-2 text-gray-600 cursor-not-allowed">
                     Google Play
