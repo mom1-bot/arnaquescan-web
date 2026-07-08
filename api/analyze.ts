@@ -16,11 +16,11 @@ const ANTHROPIC_MODEL = "claude-haiku-4-5";
 const MAX_IMAGE_BASE64_LENGTH = 10_000_000; // ~7.3MB decoded
 
 // Anonymous (no Firebase account) callers — e.g. the web app's free tier — are
-// capped per IP via Vercel KV. Signed-in callers (mobile app, logged-in web
-// users) are trusted and unlimited here, matching the product's "unlimited
-// with an account" promise.
-const ANON_RATE_LIMIT_MAX = 5;
-const ANON_RATE_LIMIT_WINDOW_SECONDS = 60 * 60;
+// capped per IP via Redis (Upstash), matching the site's "3 free analyses"
+// tier. Signed-in callers (mobile app, logged-in web users) are trusted and
+// unlimited here, matching the product's "unlimited with an account" promise.
+const ANON_RATE_LIMIT_MAX = 3;
+const ANON_RATE_LIMIT_WINDOW_SECONDS = 60 * 60 * 24;
 
 const JWKS = createRemoteJWKSet(
   new URL("https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com")
