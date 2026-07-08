@@ -68,11 +68,13 @@ export default function Analyze() {
     setResult(null);
 
     try {
+      const idToken = user ? await user.getIdToken() : undefined;
       const analysis = await runAnalysis({
         msgType,
         text,
         imageBase64: image?.base64,
         imageMime:   image?.mime,
+        idToken,
       });
 
       if (analysis.unreadable) {
