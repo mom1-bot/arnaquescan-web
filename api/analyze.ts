@@ -324,12 +324,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         messages: [{ role: "user", content: userContent }],
       }),
     });
-  } catch {
+  } catch (err) {
+    console.error("[analyze] Anthropic fetch failed:", err);
     res.status(502).json({ error: true, code: "upstream_error" });
     return;
   }
 
   if (!anthropicResponse.ok) {
+    const errBody = await anthropicResponse.text().catch(() => "");
+    console.error(`[analyze] Anthropic returned ${anthropicResponse.status}:`, errBody);
     res.status(502).json({ error: true, code: "upstream_error" });
     return;
   }
@@ -339,7 +342,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const raw = data.content.map((c) => c.text ?? "").join("");
     const parsed = JSON.parse(raw.replace(/```json|```/g, "").trim());
     res.status(200).json(parsed);
-  } catch {
+  } catch (err) {
+    console.error("[analyze] Failed to parse Anthropic response:", err);
     res.status(502).json({ error: true, code: "upstream_error" });
   }
 }
