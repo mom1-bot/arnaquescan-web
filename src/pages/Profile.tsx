@@ -52,7 +52,10 @@ export default function Profile() {
         <meta name="robots" content="noindex, follow" />
       </Helmet>
       <div className="max-w-lg mx-auto px-4">
-        <h1 className="text-2xl font-black text-gray-900 mb-8">Mon profil</h1>
+        <h1 className="text-2xl font-black text-gray-900 mb-1">Mon profil</h1>
+        <p className="text-sm text-gray-500 mb-8">
+          Bonjour{user.displayName ? ` ${user.displayName}` : ""} !
+        </p>
 
         {/* Account info */}
         <div className="bg-white rounded-2xl border border-gray-100 p-6 mb-4">

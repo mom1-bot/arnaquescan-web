@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
@@ -17,6 +18,7 @@ export default function Auth() {
   const [mode, setMode]         = useState<"login" | "register" | "reset">(
     params.get("mode") === "register" ? "register" : "login"
   );
+  const [firstName, setFirstName] = useState("");
   const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
   const [error, setError]       = useState<string | null>(null);
@@ -36,7 +38,10 @@ export default function Auth() {
         await sendPasswordResetEmail(auth, email);
         setResetSent(true);
       } else if (mode === "register") {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const credential = await createUserWithEmailAndPassword(auth, email, password);
+        if (firstName.trim()) {
+          await updateProfile(credential.user, { displayName: firstName.trim() });
+        }
       } else {
         await signInWithEmailAndPassword(auth, email, password);
       }
@@ -95,6 +100,19 @@ export default function Auth() {
         ) : (
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
             <form onSubmit={handleSubmit} className="space-y-4">
+              {mode === "register" && (
+                <div>
+                  <label className="text-xs font-semibold text-gray-500 block mb-1.5">Prénom <span className="font-normal text-gray-400">(optionnel)</span></label>
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="Alex"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue/50 focus:ring-2 focus:ring-blue/10 transition-all"
+                  />
+                </div>
+              )}
+
               <div>
                 <label className="text-xs font-semibold text-gray-500 block mb-1.5">Adresse email</label>
                 <input
