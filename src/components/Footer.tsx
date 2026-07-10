@@ -8,8 +8,8 @@ export function Footer() {
           <span>— Protégez-vous des arnaques</span>
         </div>
         <div className="flex items-center gap-4">
-          <a href="#" className="hover:text-blue transition-colors">Confidentialité</a>
-          <a href="#" className="hover:text-blue transition-colors">CGU</a>
+          <a href="/mentions-legales" className="hover:text-blue transition-colors">Confidentialité</a>
+          <a href="/cgu" className="hover:text-blue transition-colors">CGU</a>
           <span>© {new Date().getFullYear()}</span>
         </div>
       </div>

@@ -8,6 +8,8 @@ import History      from "./pages/History";
 import Profile      from "./pages/Profile";
 import Subscription from "./pages/Subscription";
 import Auth         from "./pages/Auth";
+import Legal        from "./pages/Legal";
+import CGU          from "./pages/CGU";
 
 function AppLayout() {
   return (
@@ -34,6 +36,8 @@ export default function App() {
           <Route path="/abonnement" element={<Subscription />} />
           <Route path="/historique" element={<ProtectedRoute><History /></ProtectedRoute>} />
           <Route path="/profil"     element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/mentions-legales" element={<Legal />} />
+          <Route path="/cgu"              element={<CGU />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -55,8 +55,8 @@ export function LandingFooter() {
                     Politique de confidentialité
                   </a>
                 </li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Mentions légales</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">CGV / CGU</a></li>
+                <li><a href="/mentions-legales" className="text-gray-400 hover:text-white transition-colors">Mentions légales</a></li>
+                <li><a href="/cgu" className="text-gray-400 hover:text-white transition-colors">CGV / CGU</a></li>
               </ul>
             </div>
             <div>
