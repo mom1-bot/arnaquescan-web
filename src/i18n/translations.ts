@@ -42,7 +42,7 @@ export interface Translations {
     pricing: string;
     faq: string;
     login: string;
-    appStoreSoon: string;
+    appStoreCta: string;
     androidSoon: string;
     googlePlaySoon: string;
   };
@@ -53,6 +53,7 @@ export interface Translations {
     titlePost: string;
     subtitle: string;
     soonOn: string;
+    downloadOn: string;
     appStore: string;
     googlePlay: string;
     pricingLink: string;
@@ -80,18 +81,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Tarifs",
       faq: "FAQ",
       login: "Se connecter",
-      appStoreSoon: "Bientôt sur l'App Store",
+      appStoreCta: "Télécharger sur l'App Store",
       androidSoon: "Android bientôt",
       googlePlaySoon: "Bientôt sur Google Play",
     },
     hero: {
-      badge: "Bientôt disponible sur App Store · Marque déposée INPI",
+      badge: "Disponible sur l'App Store · Marque déposée INPI",
       titlePre: "Protégez vos proches et vos données contre",
       titleHighlight: "les arnaques",
       titlePost: "en un clic.",
       subtitle:
         "ArnaqueScan détecte les SMS frauduleux, les e-mails de phishing et les sites suspects en temps réel grâce à l'IA.",
       soonOn: "Bientôt sur",
+      downloadOn: "Télécharger sur",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "Voir les tarifs",
@@ -132,7 +134,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "L'app fonctionne-t-elle sur Android ?",
-          a: "ArnaqueScan sera bientôt disponible sur iOS et Android (iPhone et iPad, iOS 17+). Inscrivez-vous sur notre site pour être notifié dès la sortie. En attendant, vous pouvez utiliser la version web à l'adresse arnaquescan.vercel.app depuis n'importe quel navigateur.",
+          a: "ArnaqueScan est désormais disponible sur iOS (iPhone et iPad, iOS 17+) via l'App Store. Une version Android est en préparation — inscrivez-vous sur notre site pour être notifié dès sa sortie. En attendant, vous pouvez utiliser la version web à l'adresse arnaquescan.vercel.app depuis n'importe quel navigateur.",
         },
         {
           q: "Pourquoi la marque est-elle déposée à l'INPI ?",
@@ -147,18 +149,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Pricing",
       faq: "FAQ",
       login: "Log in",
-      appStoreSoon: "Coming soon to the App Store",
+      appStoreCta: "Download on the App Store",
       androidSoon: "Android coming soon",
       googlePlaySoon: "Coming soon on Google Play",
     },
     hero: {
-      badge: "Coming soon to the App Store · Trademark registered with INPI",
+      badge: "Available on the App Store · Trademark registered with INPI",
       titlePre: "Protect your loved ones and your data from",
       titleHighlight: "scams",
       titlePost: "in one click.",
       subtitle:
         "ArnaqueScan detects fraudulent SMS, phishing emails and suspicious websites in real time using AI.",
       soonOn: "Coming soon on",
+      downloadOn: "Download on",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "See pricing",
@@ -199,7 +202,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "Does the app work on Android?",
-          a: "ArnaqueScan will soon be available on iOS and Android (iPhone and iPad, iOS 17+). Sign up on our website to be notified at launch. In the meantime, you can use the web version at arnaquescan.vercel.app from any browser.",
+          a: "ArnaqueScan is now available on iOS (iPhone and iPad, iOS 17+) via the App Store. An Android version is in progress — sign up on our website to be notified at launch. In the meantime, you can use the web version at arnaquescan.vercel.app from any browser.",
         },
         {
           q: "Why is the trademark registered with the INPI?",
@@ -214,18 +217,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Precios",
       faq: "FAQ",
       login: "Iniciar sesión",
-      appStoreSoon: "Próximamente en App Store",
+      appStoreCta: "Descargar en App Store",
       androidSoon: "Android próximamente",
       googlePlaySoon: "Próximamente en Google Play",
     },
     hero: {
-      badge: "Próximamente en App Store · Marca registrada en el INPI",
+      badge: "Disponible en App Store · Marca registrada en el INPI",
       titlePre: "Protege a tus seres queridos y tus datos frente a",
       titleHighlight: "las estafas",
       titlePost: "en un clic.",
       subtitle:
         "ArnaqueScan detecta SMS fraudulentos, correos de phishing y sitios web sospechosos en tiempo real gracias a la IA.",
       soonOn: "Próximamente en",
+      downloadOn: "Descargar en",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "Ver precios",
@@ -266,7 +270,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "¿Funciona la app en Android?",
-          a: "ArnaqueScan estará disponible próximamente en iOS y Android (iPhone y iPad, iOS 17+). Regístrate en nuestro sitio para recibir una notificación en el lanzamiento. Mientras tanto, puedes usar la versión web en arnaquescan.vercel.app desde cualquier navegador.",
+          a: "ArnaqueScan ya está disponible en iOS (iPhone y iPad, iOS 17+) a través de la App Store. Una versión para Android está en preparación: regístrate en nuestro sitio para recibir una notificación en el lanzamiento. Mientras tanto, puedes usar la versión web en arnaquescan.vercel.app desde cualquier navegador.",
         },
         {
           q: "¿Por qué la marca está registrada en el INPI?",
@@ -281,18 +285,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Prijzen",
       faq: "FAQ",
       login: "Inloggen",
-      appStoreSoon: "Binnenkort op de App Store",
+      appStoreCta: "Downloaden in de App Store",
       androidSoon: "Android binnenkort",
       googlePlaySoon: "Binnenkort op Google Play",
     },
     hero: {
-      badge: "Binnenkort beschikbaar op de App Store · Merk geregistreerd bij INPI",
+      badge: "Beschikbaar op de App Store · Merk geregistreerd bij INPI",
       titlePre: "Bescherm je dierbaren en je gegevens tegen",
       titleHighlight: "oplichting",
       titlePost: "met één klik.",
       subtitle:
         "ArnaqueScan detecteert frauduleuze sms'jes, phishing-e-mails en verdachte websites in realtime dankzij AI.",
       soonOn: "Binnenkort op",
+      downloadOn: "Downloaden in de",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "Bekijk prijzen",
@@ -333,7 +338,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "Werkt de app op Android?",
-          a: "ArnaqueScan komt binnenkort beschikbaar voor iOS en Android (iPhone en iPad, iOS 17+). Meld je aan op onze website om op de hoogte te blijven van de lancering. In de tussentijd kun je de webversie gebruiken op arnaquescan.vercel.app, vanuit elke browser.",
+          a: "ArnaqueScan is nu beschikbaar op iOS (iPhone en iPad, iOS 17+) via de App Store. Een Android-versie wordt momenteel ontwikkeld — meld je aan op onze website om op de hoogte te blijven van de lancering. In de tussentijd kun je de webversie gebruiken op arnaquescan.vercel.app, vanuit elke browser.",
         },
         {
           q: "Waarom is het merk geregistreerd bij het INPI?",
@@ -348,18 +353,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Preise",
       faq: "FAQ",
       login: "Anmelden",
-      appStoreSoon: "Bald im App Store",
+      appStoreCta: "Im App Store laden",
       androidSoon: "Android bald verfügbar",
       googlePlaySoon: "Bald bei Google Play",
     },
     hero: {
-      badge: "Bald im App Store verfügbar · Marke beim INPI eingetragen",
+      badge: "Jetzt im App Store verfügbar · Marke beim INPI eingetragen",
       titlePre: "Schützen Sie Ihre Liebsten und Ihre Daten vor",
       titleHighlight: "Betrug",
       titlePost: "mit einem Klick.",
       subtitle:
         "ArnaqueScan erkennt betrügerische SMS, Phishing-E-Mails und verdächtige Websites in Echtzeit dank KI.",
       soonOn: "Bald auf",
+      downloadOn: "Laden im",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "Preise ansehen",
@@ -400,7 +406,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "Funktioniert die App auf Android?",
-          a: "ArnaqueScan wird bald für iOS und Android verfügbar sein (iPhone und iPad, iOS 17+). Melden Sie sich auf unserer Website an, um bei der Veröffentlichung benachrichtigt zu werden. In der Zwischenzeit können Sie die Webversion unter arnaquescan.vercel.app in jedem Browser nutzen.",
+          a: "ArnaqueScan ist jetzt auf iOS (iPhone und iPad, iOS 17+) über den App Store verfügbar. Eine Android-Version befindet sich in Vorbereitung — melden Sie sich auf unserer Website an, um bei der Veröffentlichung benachrichtigt zu werden. In der Zwischenzeit können Sie die Webversion unter arnaquescan.vercel.app in jedem Browser nutzen.",
         },
         {
           q: "Warum ist die Marke beim INPI eingetragen?",
@@ -415,18 +421,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "الأسعار",
       faq: "الأسئلة الشائعة",
       login: "تسجيل الدخول",
-      appStoreSoon: "قريبًا على App Store",
+      appStoreCta: "التحميل من App Store",
       androidSoon: "قريبًا على أندرويد",
       googlePlaySoon: "قريبًا على Google Play",
     },
     hero: {
-      badge: "قريبًا على App Store · علامة تجارية مسجّلة لدى INPI",
+      badge: "متوفر الآن على App Store · علامة تجارية مسجّلة لدى INPI",
       titlePre: "احمِ أحباءك وبياناتك من",
       titleHighlight: "عمليات الاحتيال",
       titlePost: "بنقرة واحدة.",
       subtitle:
         "يكتشف ArnaqueScan الرسائل النصية الاحتيالية ورسائل التصيّد الإلكتروني والمواقع المشبوهة في الوقت الفعلي بفضل الذكاء الاصطناعي.",
       soonOn: "قريبًا على",
+      downloadOn: "التحميل من",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "عرض الأسعار",
@@ -467,7 +474,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "هل يعمل التطبيق على أندرويد؟",
-          a: "سيتوفر ArnaqueScan قريبًا على iOS وأندرويد (آيفون وآيباد، iOS 17 فما فوق). سجّل على موقعنا لتصلك إشعار عند الإطلاق. في غضون ذلك، يمكنك استخدام النسخة الإلكترونية على arnaquescan.vercel.app من أي متصفح.",
+          a: "أصبح ArnaqueScan متاحًا الآن على iOS (آيفون وآيباد، iOS 17 فما فوق) عبر App Store. نسخة أندرويد قيد التحضير — سجّل على موقعنا لتصلك إشعار عند إطلاقها. في غضون ذلك، يمكنك استخدام النسخة الإلكترونية على arnaquescan.vercel.app من أي متصفح.",
         },
         {
           q: "لماذا العلامة التجارية مسجّلة لدى INPI؟",
@@ -482,18 +489,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Prezzi",
       faq: "FAQ",
       login: "Accedi",
-      appStoreSoon: "Presto su App Store",
+      appStoreCta: "Scarica su App Store",
       androidSoon: "Android in arrivo",
       googlePlaySoon: "Presto su Google Play",
     },
     hero: {
-      badge: "Presto su App Store · Marchio registrato presso l'INPI",
+      badge: "Disponibile su App Store · Marchio registrato presso l'INPI",
       titlePre: "Proteggi i tuoi cari e i tuoi dati da",
       titleHighlight: "le truffe",
       titlePost: "in un clic.",
       subtitle:
         "ArnaqueScan rileva SMS fraudolenti, e-mail di phishing e siti sospetti in tempo reale grazie all'IA.",
       soonOn: "Presto su",
+      downloadOn: "Scarica su",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "Vedi i prezzi",
@@ -534,7 +542,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "L'app funziona su Android?",
-          a: "ArnaqueScan sarà presto disponibile su iOS e Android (iPhone e iPad, iOS 17+). Iscriviti sul nostro sito per essere avvisato al lancio. Nel frattempo, puoi utilizzare la versione web su arnaquescan.vercel.app da qualsiasi browser.",
+          a: "ArnaqueScan è ora disponibile su iOS (iPhone e iPad, iOS 17+) tramite l'App Store. Una versione Android è in preparazione: iscriviti sul nostro sito per essere avvisato al lancio. Nel frattempo, puoi utilizzare la versione web su arnaquescan.vercel.app da qualsiasi browser.",
         },
         {
           q: "Perché il marchio è registrato presso l'INPI?",
@@ -549,18 +557,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "料金",
       faq: "よくある質問",
       login: "ログイン",
-      appStoreSoon: "App Storeで近日公開",
+      appStoreCta: "App Storeでダウンロード",
       androidSoon: "Android版は近日公開",
       googlePlaySoon: "Google Playで近日公開",
     },
     hero: {
-      badge: "App Storeで近日公開・INPI商標登録済み",
+      badge: "App Storeで提供中・INPI商標登録済み",
       titlePre: "大切な人とあなたのデータを",
       titleHighlight: "詐欺",
       titlePost: "からワンクリックで守る。",
       subtitle:
         "ArnaqueScanはAIを活用し、詐欺SMS、フィッシングメール、不審なウェブサイトをリアルタイムで検出します。",
       soonOn: "近日公開：",
+      downloadOn: "ダウンロード：",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "料金を見る",
@@ -601,7 +610,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "アプリはAndroidでも使えますか？",
-          a: "ArnaqueScanはまもなくiOSとAndroid（iPhoneおよびiPad、iOS 17以降）でご利用いただけるようになります。リリース時に通知を受け取るには、当社サイトでご登録ください。それまでの間は、arnaquescan.vercel.app のWeb版をあらゆるブラウザからご利用いただけます。",
+          a: "ArnaqueScanは現在、App Store経由でiOS（iPhoneおよびiPad、iOS 17以降）でご利用いただけます。Android版は準備中です。リリース時に通知を受け取るには、当社サイトでご登録ください。それまでの間は、arnaquescan.vercel.app のWeb版をあらゆるブラウザからご利用いただけます。",
         },
         {
           q: "なぜ商標がINPIに登録されているのですか？",
@@ -616,18 +625,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "요금제",
       faq: "자주 묻는 질문",
       login: "로그인",
-      appStoreSoon: "App Store 출시 예정",
+      appStoreCta: "App Store에서 다운로드",
       androidSoon: "Android 버전 출시 예정",
       googlePlaySoon: "Google Play 출시 예정",
     },
     hero: {
-      badge: "App Store 출시 예정 · INPI 상표 등록 완료",
+      badge: "App Store에서 이용 가능 · INPI 상표 등록 완료",
       titlePre: "소중한 사람과 데이터를",
       titleHighlight: "사기",
       titlePost: "로부터 한 번의 클릭으로 보호하세요.",
       subtitle:
         "ArnaqueScan은 AI를 통해 사기 문자, 피싱 이메일, 의심스러운 웹사이트를 실시간으로 감지합니다.",
       soonOn: "출시 예정:",
+      downloadOn: "다운로드:",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "요금제 보기",
@@ -668,7 +678,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "앱이 Android에서도 작동하나요?",
-          a: "ArnaqueScan은 곧 iOS와 Android(iPhone 및 iPad, iOS 17 이상)에서 이용 가능해집니다. 출시 시 알림을 받으려면 저희 웹사이트에 가입하세요. 그때까지는 어떤 브라우저에서든 arnaquescan.vercel.app에서 웹 버전을 이용하실 수 있습니다.",
+          a: "ArnaqueScan은 이제 App Store를 통해 iOS(iPhone 및 iPad, iOS 17 이상)에서 이용 가능합니다. Android 버전은 준비 중입니다 — 출시 시 알림을 받으려면 저희 웹사이트에 가입하세요. 그때까지는 어떤 브라우저에서든 arnaquescan.vercel.app에서 웹 버전을 이용하실 수 있습니다.",
         },
         {
           q: "상표가 왜 INPI에 등록되어 있나요?",
@@ -683,18 +693,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Cennik",
       faq: "FAQ",
       login: "Zaloguj się",
-      appStoreSoon: "Wkrótce w App Store",
+      appStoreCta: "Pobierz z App Store",
       androidSoon: "Wkrótce na Androida",
       googlePlaySoon: "Wkrótce w Google Play",
     },
     hero: {
-      badge: "Wkrótce w App Store · Znak towarowy zarejestrowany w INPI",
+      badge: "Dostępne w App Store · Znak towarowy zarejestrowany w INPI",
       titlePre: "Chroń swoich bliskich i swoje dane przed",
       titleHighlight: "oszustwami",
       titlePost: "za jednym kliknięciem.",
       subtitle:
         "ArnaqueScan wykrywa oszukańcze SMS-y, e-maile phishingowe i podejrzane strony internetowe w czasie rzeczywistym dzięki sztucznej inteligencji.",
       soonOn: "Wkrótce w",
+      downloadOn: "Pobierz z",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "Zobacz cennik",
@@ -735,7 +746,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "Czy aplikacja działa na Androidzie?",
-          a: "ArnaqueScan będzie wkrótce dostępny na iOS i Androidzie (iPhone i iPad, iOS 17+). Zarejestruj się na naszej stronie, aby otrzymać powiadomienie w dniu premiery. W międzyczasie możesz korzystać z wersji internetowej pod adresem arnaquescan.vercel.app z dowolnej przeglądarki.",
+          a: "ArnaqueScan jest już dostępny na iOS (iPhone i iPad, iOS 17+) w App Store. Wersja na Androida jest w przygotowaniu — zarejestruj się na naszej stronie, aby otrzymać powiadomienie w dniu premiery. W międzyczasie możesz korzystać z wersji internetowej pod adresem arnaquescan.vercel.app z dowolnej przeglądarki.",
         },
         {
           q: "Dlaczego znak towarowy jest zarejestrowany w INPI?",
@@ -750,18 +761,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Preços",
       faq: "FAQ",
       login: "Iniciar sessão",
-      appStoreSoon: "Brevemente na App Store",
+      appStoreCta: "Transferir na App Store",
       androidSoon: "Android brevemente",
       googlePlaySoon: "Brevemente no Google Play",
     },
     hero: {
-      badge: "Brevemente na App Store · Marca registada no INPI",
+      badge: "Disponível na App Store · Marca registada no INPI",
       titlePre: "Proteja os seus entes queridos e os seus dados contra",
       titleHighlight: "os burlões",
       titlePost: "com um clique.",
       subtitle:
         "O ArnaqueScan deteta SMS fraudulentos, e-mails de phishing e sites suspeitos em tempo real graças à IA.",
       soonOn: "Brevemente no",
+      downloadOn: "Transferir na",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "Ver preços",
@@ -802,7 +814,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "A aplicação funciona no Android?",
-          a: "O ArnaqueScan estará brevemente disponível no iOS e no Android (iPhone e iPad, iOS 17+). Inscreva-se no nosso site para ser notificado no lançamento. Entretanto, pode utilizar a versão web em arnaquescan.vercel.app a partir de qualquer navegador.",
+          a: "O ArnaqueScan já está disponível no iOS (iPhone e iPad, iOS 17+) através da App Store. Uma versão para Android está em preparação — inscreva-se no nosso site para ser notificado no lançamento. Entretanto, pode utilizar a versão web em arnaquescan.vercel.app a partir de qualquer navegador.",
         },
         {
           q: "Porque é que a marca está registada no INPI?",
@@ -817,18 +829,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Prețuri",
       faq: "Întrebări frecvente",
       login: "Conectare",
-      appStoreSoon: "În curând pe App Store",
+      appStoreCta: "Descarcă din App Store",
       androidSoon: "Android în curând",
       googlePlaySoon: "În curând pe Google Play",
     },
     hero: {
-      badge: "În curând pe App Store · Marcă înregistrată la INPI",
+      badge: "Disponibil pe App Store · Marcă înregistrată la INPI",
       titlePre: "Protejează-ți persoanele dragi și datele împotriva",
       titleHighlight: "escrocheriilor",
       titlePost: "cu un singur clic.",
       subtitle:
         "ArnaqueScan detectează SMS-urile frauduloase, e-mailurile de phishing și site-urile suspecte în timp real datorită inteligenței artificiale.",
       soonOn: "În curând pe",
+      downloadOn: "Descarcă din",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "Vezi prețurile",
@@ -869,7 +882,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "Aplicația funcționează pe Android?",
-          a: "ArnaqueScan va fi disponibil în curând pe iOS și Android (iPhone și iPad, iOS 17+). Înscrie-te pe site-ul nostru pentru a fi notificat la lansare. Între timp, poți folosi versiunea web la arnaquescan.vercel.app din orice browser.",
+          a: "ArnaqueScan este acum disponibil pe iOS (iPhone și iPad, iOS 17+) prin App Store. O versiune pentru Android este în pregătire — înscrie-te pe site-ul nostru pentru a fi notificat la lansare. Între timp, poți folosi versiunea web la arnaquescan.vercel.app din orice browser.",
         },
         {
           q: "De ce este marca înregistrată la INPI?",
@@ -884,18 +897,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Тарифы",
       faq: "Частые вопросы",
       login: "Войти",
-      appStoreSoon: "Скоро в App Store",
+      appStoreCta: "Скачать в App Store",
       androidSoon: "Android скоро",
       googlePlaySoon: "Скоро в Google Play",
     },
     hero: {
-      badge: "Скоро в App Store · Товарный знак зарегистрирован в INPI",
+      badge: "Доступно в App Store · Товарный знак зарегистрирован в INPI",
       titlePre: "Защитите своих близких и свои данные от",
       titleHighlight: "мошенничества",
       titlePost: "одним нажатием.",
       subtitle:
         "ArnaqueScan обнаруживает мошеннические SMS, фишинговые письма и подозрительные сайты в режиме реального времени благодаря ИИ.",
       soonOn: "Скоро в",
+      downloadOn: "Скачать в",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "Смотреть тарифы",
@@ -936,7 +950,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "Работает ли приложение на Android?",
-          a: "ArnaqueScan скоро будет доступен на iOS и Android (iPhone и iPad, iOS 17+). Зарегистрируйтесь на нашем сайте, чтобы получить уведомление о запуске. А пока вы можете использовать веб-версию на arnaquescan.vercel.app в любом браузере.",
+          a: "ArnaqueScan теперь доступен на iOS (iPhone и iPad, iOS 17+) через App Store. Версия для Android находится в разработке — зарегистрируйтесь на нашем сайте, чтобы получить уведомление о запуске. А пока вы можете использовать веб-версию на arnaquescan.vercel.app в любом браузере.",
         },
         {
           q: "Почему товарный знак зарегистрирован в INPI?",
@@ -951,18 +965,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "ราคา",
       faq: "คำถามที่พบบ่อย",
       login: "เข้าสู่ระบบ",
-      appStoreSoon: "เร็ว ๆ นี้บน App Store",
+      appStoreCta: "ดาวน์โหลดบน App Store",
       androidSoon: "Android เร็ว ๆ นี้",
       googlePlaySoon: "เร็ว ๆ นี้บน Google Play",
     },
     hero: {
-      badge: "เร็ว ๆ นี้บน App Store · เครื่องหมายการค้าจดทะเบียนกับ INPI",
+      badge: "พร้อมใช้งานบน App Store · เครื่องหมายการค้าจดทะเบียนกับ INPI",
       titlePre: "ปกป้องคนที่คุณรักและข้อมูลของคุณจาก",
       titleHighlight: "การหลอกลวง",
       titlePost: "ได้ในคลิกเดียว",
       subtitle:
         "ArnaqueScan ตรวจจับ SMS หลอกลวง อีเมลฟิชชิง และเว็บไซต์ที่น่าสงสัยแบบเรียลไทม์ด้วย AI",
       soonOn: "เร็ว ๆ นี้บน",
+      downloadOn: "ดาวน์โหลดบน",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "ดูราคา",
@@ -1003,7 +1018,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "แอปใช้งานได้บน Android ไหม?",
-          a: "ArnaqueScan จะพร้อมให้บริการบน iOS และ Android เร็ว ๆ นี้ (iPhone และ iPad, iOS 17 ขึ้นไป) สมัครรับการแจ้งเตือนบนเว็บไซต์ของเราเพื่อรับทราบเมื่อเปิดตัว ในระหว่างนี้ คุณสามารถใช้เวอร์ชันเว็บได้ที่ arnaquescan.vercel.app จากเบราว์เซอร์ใดก็ได้",
+          a: "ArnaqueScan พร้อมใช้งานแล้วบน iOS (iPhone และ iPad, iOS 17 ขึ้นไป) ผ่าน App Store ส่วนเวอร์ชัน Android กำลังอยู่ระหว่างการเตรียมการ — สมัครรับการแจ้งเตือนบนเว็บไซต์ของเราเพื่อรับทราบเมื่อเปิดตัว ในระหว่างนี้ คุณสามารถใช้เวอร์ชันเว็บได้ที่ arnaquescan.vercel.app จากเบราว์เซอร์ใดก็ได้",
         },
         {
           q: "ทำไมเครื่องหมายการค้าจึงจดทะเบียนกับ INPI?",
@@ -1018,18 +1033,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Fiyatlandırma",
       faq: "SSS",
       login: "Giriş yap",
-      appStoreSoon: "Yakında App Store'da",
+      appStoreCta: "App Store'dan indir",
       androidSoon: "Android yakında",
       googlePlaySoon: "Yakında Google Play'de",
     },
     hero: {
-      badge: "Yakında App Store'da · INPI'de tescilli marka",
+      badge: "App Store'da yayında · INPI'de tescilli marka",
       titlePre: "Sevdiklerinizi ve verilerinizi",
       titleHighlight: "dolandırıcılıktan",
       titlePost: "tek tıkla koruyun.",
       subtitle:
         "ArnaqueScan, yapay zeka sayesinde sahte SMS'leri, kimlik avı e-postalarını ve şüpheli web sitelerini gerçek zamanlı olarak tespit eder.",
       soonOn: "Yakında",
+      downloadOn: "İndir:",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "Fiyatları gör",
@@ -1070,7 +1086,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "Uygulama Android'de çalışıyor mu?",
-          a: "ArnaqueScan yakında iOS ve Android'de (iPhone ve iPad, iOS 17+) kullanıma sunulacak. Lansmanda bilgilendirilmek için web sitemizden kaydolun. Bu arada, herhangi bir tarayıcıdan arnaquescan.vercel.app adresindeki web sürümünü kullanabilirsiniz.",
+          a: "ArnaqueScan artık App Store üzerinden iOS'ta (iPhone ve iPad, iOS 17+) kullanılabiliyor. Android sürümü hazırlanıyor — lansmanda bilgilendirilmek için web sitemizden kaydolun. Bu arada, herhangi bir tarayıcıdan arnaquescan.vercel.app adresindeki web sürümünü kullanabilirsiniz.",
         },
         {
           q: "Marka neden INPI'de tescilli?",
@@ -1085,18 +1101,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Bảng giá",
       faq: "Câu hỏi thường gặp",
       login: "Đăng nhập",
-      appStoreSoon: "Sắp có trên App Store",
+      appStoreCta: "Tải trên App Store",
       androidSoon: "Sắp có trên Android",
       googlePlaySoon: "Sắp có trên Google Play",
     },
     hero: {
-      badge: "Sắp có trên App Store · Nhãn hiệu đã đăng ký tại INPI",
+      badge: "Đã có trên App Store · Nhãn hiệu đã đăng ký tại INPI",
       titlePre: "Bảo vệ người thân và dữ liệu của bạn khỏi",
       titleHighlight: "lừa đảo",
       titlePost: "chỉ với một cú nhấp chuột.",
       subtitle:
         "ArnaqueScan phát hiện SMS lừa đảo, email lừa đảo (phishing) và các trang web đáng ngờ theo thời gian thực nhờ AI.",
       soonOn: "Sắp có trên",
+      downloadOn: "Tải trên",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "Xem bảng giá",
@@ -1137,7 +1154,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "Ứng dụng có hoạt động trên Android không?",
-          a: "ArnaqueScan sẽ sớm có mặt trên iOS và Android (iPhone và iPad, iOS 17 trở lên). Đăng ký trên trang web của chúng tôi để được thông báo khi ra mắt. Trong thời gian chờ đợi, bạn có thể sử dụng phiên bản web tại arnaquescan.vercel.app từ bất kỳ trình duyệt nào.",
+          a: "ArnaqueScan hiện đã có mặt trên iOS (iPhone và iPad, iOS 17 trở lên) qua App Store. Phiên bản Android đang được chuẩn bị — đăng ký trên trang web của chúng tôi để được thông báo khi ra mắt. Trong thời gian chờ đợi, bạn có thể sử dụng phiên bản web tại arnaquescan.vercel.app từ bất kỳ trình duyệt nào.",
         },
         {
           q: "Tại sao nhãn hiệu lại được đăng ký tại INPI?",
@@ -1152,18 +1169,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "Harga",
       faq: "FAQ",
       login: "Masuk",
-      appStoreSoon: "Segera hadir di App Store",
+      appStoreCta: "Unduh di App Store",
       androidSoon: "Android segera hadir",
       googlePlaySoon: "Segera hadir di Google Play",
     },
     hero: {
-      badge: "Segera hadir di App Store · Merek terdaftar di INPI",
+      badge: "Tersedia di App Store · Merek terdaftar di INPI",
       titlePre: "Lindungi orang-orang terkasih dan data Anda dari",
       titleHighlight: "penipuan",
       titlePost: "hanya dengan satu klik.",
       subtitle:
         "ArnaqueScan mendeteksi SMS penipuan, email phishing, dan situs web yang mencurigakan secara real-time berkat AI.",
       soonOn: "Segera hadir di",
+      downloadOn: "Unduh di",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "Lihat harga",
@@ -1204,7 +1222,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "Apakah aplikasi ini berfungsi di Android?",
-          a: "ArnaqueScan akan segera tersedia di iOS dan Android (iPhone dan iPad, iOS 17+). Daftar di situs web kami untuk mendapatkan pemberitahuan saat peluncuran. Sementara itu, Anda dapat menggunakan versi web di arnaquescan.vercel.app dari browser mana pun.",
+          a: "ArnaqueScan kini tersedia di iOS (iPhone dan iPad, iOS 17+) melalui App Store. Versi Android sedang dalam persiapan — daftar di situs web kami untuk mendapatkan pemberitahuan saat peluncuran. Sementara itu, Anda dapat menggunakan versi web di arnaquescan.vercel.app dari browser mana pun.",
         },
         {
           q: "Mengapa merek ini terdaftar di INPI?",
@@ -1219,18 +1237,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "价格",
       faq: "常见问题",
       login: "登录",
-      appStoreSoon: "即将登陆 App Store",
+      appStoreCta: "前往 App Store 下载",
       androidSoon: "安卓版即将推出",
       googlePlaySoon: "即将登陆 Google Play",
     },
     hero: {
-      badge: "即将登陆 App Store · 已在法国工业产权局（INPI）注册商标",
+      badge: "已上线 App Store · 已在法国工业产权局（INPI）注册商标",
       titlePre: "一键保护您的亲人和数据，远离",
       titleHighlight: "诈骗",
       titlePost: "。",
       subtitle:
         "ArnaqueScan 借助人工智能实时检测诈骗短信、钓鱼邮件和可疑网站。",
       soonOn: "即将登陆",
+      downloadOn: "下载于",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "查看价格",
@@ -1271,7 +1290,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "该应用支持安卓系统吗？",
-          a: "ArnaqueScan 即将支持 iOS 和安卓系统（iPhone 和 iPad，iOS 17 及以上）。请在我们的网站上注册，以便在上线时收到通知。与此同时，您可以在任何浏览器中通过 arnaquescan.vercel.app 使用网页版。",
+          a: "ArnaqueScan 现已通过 App Store 在 iOS（iPhone 和 iPad，iOS 17 及以上）上线。安卓版本正在准备中——请在我们的网站上注册，以便在上线时收到通知。与此同时，您可以在任何浏览器中通过 arnaquescan.vercel.app 使用网页版。",
         },
         {
           q: "为什么商标要在 INPI 注册？",
@@ -1286,18 +1305,19 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       pricing: "價格",
       faq: "常見問題",
       login: "登入",
-      appStoreSoon: "即將登陸 App Store",
+      appStoreCta: "前往 App Store 下載",
       androidSoon: "Android 版即將推出",
       googlePlaySoon: "即將登陸 Google Play",
     },
     hero: {
-      badge: "即將登陸 App Store · 已於法國工業產權局（INPI）註冊商標",
+      badge: "已上線 App Store · 已於法國工業產權局（INPI）註冊商標",
       titlePre: "一鍵保護您的親人與資料，遠離",
       titleHighlight: "詐騙",
       titlePost: "。",
       subtitle:
         "ArnaqueScan 運用人工智慧即時偵測詐騙簡訊、釣魚郵件與可疑網站。",
       soonOn: "即將登陸",
+      downloadOn: "下載於",
       appStore: "App Store",
       googlePlay: "Google Play",
       pricingLink: "查看價格",
@@ -1338,7 +1358,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         },
         {
           q: "該應用程式支援 Android 系統嗎？",
-          a: "ArnaqueScan 即將支援 iOS 與 Android 系統（iPhone 與 iPad，iOS 17 及以上）。請在我們的網站上註冊，以便在上線時收到通知。與此同時，您可以在任何瀏覽器中透過 arnaquescan.vercel.app 使用網頁版。",
+          a: "ArnaqueScan 現已透過 App Store 在 iOS（iPhone 和 iPad，iOS 17 及以上）上線。Android 版本正在準備中——請在我們的網站上註冊，以便在上線時收到通知。與此同時，您可以在任何瀏覽器中透過 arnaquescan.vercel.app 使用網頁版。",
         },
         {
           q: "為什麼商標要在 INPI 註冊？",

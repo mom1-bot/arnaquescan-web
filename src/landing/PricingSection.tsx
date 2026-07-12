@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
+const APP_STORE_URL = "https://apps.apple.com/app/arnaquescan/id6786055299";
 
 const FREE_FEATURES = [
   "3 analyses / mois",
@@ -114,12 +117,12 @@ export function PricingSection() {
               </li>
             </ul>
 
-            <button
-              disabled
-              className="block w-full text-center py-3.5 text-sm font-bold text-gray-400 bg-gray-100 rounded-xl cursor-not-allowed"
+            <Link
+              to="/auth?mode=register"
+              className="block w-full text-center py-3.5 text-sm font-bold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
             >
-              Bientôt disponible
-            </button>
+              Créer un compte gratuit
+            </Link>
           </div>
 
           {/* Premium */}
@@ -176,16 +179,18 @@ export function PricingSection() {
               ))}
             </ul>
 
-            <button
-              disabled
-              className="block w-full text-center py-3.5 text-sm font-bold text-white rounded-xl cursor-not-allowed opacity-60"
+            <a
+              href={APP_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-center py-3.5 text-sm font-bold text-white rounded-xl hover:opacity-90 transition-opacity"
               style={{
                 background: "linear-gradient(135deg, #1A6FC4, #1254A0)",
                 boxShadow: "0 6px 20px rgba(26,111,196,0.32)",
               }}
             >
-              Bientôt disponible
-            </button>
+              Télécharger sur l'App Store
+            </a>
             <p className="text-center text-[10px] text-gray-400 mt-2.5">
               Annulation possible à tout moment
             </p>
@@ -233,12 +238,14 @@ export function PricingSection() {
               ))}
             </ul>
 
-            <button
-              disabled
-              className="block w-full text-center py-3.5 text-sm font-bold text-gray-400 bg-gray-100 rounded-xl cursor-not-allowed"
+            <a
+              href={APP_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-center py-3.5 text-sm font-bold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
             >
-              Bientôt disponible
-            </button>
+              Télécharger sur l'App Store
+            </a>
           </div>
 
           {/* Famille */}
@@ -283,12 +290,14 @@ export function PricingSection() {
               ))}
             </ul>
 
-            <button
-              disabled
-              className="block w-full text-center py-3.5 text-sm font-bold text-gray-400 bg-gray-100 rounded-xl cursor-not-allowed"
+            <a
+              href={APP_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-center py-3.5 text-sm font-bold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
             >
-              Bientôt disponible
-            </button>
+              Télécharger sur l'App Store
+            </a>
           </div>
         </div>
 

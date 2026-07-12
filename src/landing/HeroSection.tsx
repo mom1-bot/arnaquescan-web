@@ -123,17 +123,19 @@ export function HeroSection() {
 
             {/* Store badges */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-4">
-              {/* App Store (bientôt) */}
-              <div
-                className="flex items-center gap-3 bg-gray-100 text-gray-400 px-6 py-3.5 rounded-2xl font-medium cursor-not-allowed select-none"
-                title="En attente de validation par Apple"
+              {/* App Store (disponible) */}
+              <a
+                href="https://apps.apple.com/app/arnaquescan/id6786055299"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-gray-900 text-white px-6 py-3.5 rounded-2xl font-medium hover:bg-gray-800 transition-colors"
               >
-                <span className="text-[22px] leading-none grayscale opacity-60">📲</span>
+                <span className="text-[22px] leading-none">📲</span>
                 <div className="text-left">
-                  <div className="text-[10px] text-gray-400 font-normal leading-none mb-0.5">{t.hero.soonOn}</div>
+                  <div className="text-[10px] text-gray-300 font-normal leading-none mb-0.5">{t.hero.downloadOn}</div>
                   <div className="text-sm font-semibold leading-none">{t.hero.appStore}</div>
                 </div>
-              </div>
+              </a>
               {/* Google Play (bientôt) */}
               <div
                 className="flex items-center gap-3 bg-gray-100 text-gray-400 px-6 py-3.5 rounded-2xl font-medium cursor-not-allowed select-none"

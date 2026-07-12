@@ -64,13 +64,15 @@ export function LandingNavbar() {
             {t.nav.login}
           </Link>
           <div className="flex flex-col items-center gap-0.5">
-            <div
-              className="flex items-center gap-2.5 bg-gray-100 text-gray-400 pl-4 pr-5 py-2.5 rounded-xl text-sm font-semibold cursor-not-allowed select-none"
-              title="En attente de validation par Apple"
+            <a
+              href="https://apps.apple.com/app/arnaquescan/id6786055299"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2.5 bg-gray-900 text-white pl-4 pr-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-gray-800 transition-colors"
             >
-              <span className="text-[17px] leading-none grayscale opacity-60">📲</span>
-              <span>{t.nav.appStoreSoon}</span>
-            </div>
+              <span className="text-[17px] leading-none">📲</span>
+              <span>{t.nav.appStoreCta}</span>
+            </a>
             <span className="text-[9px] text-gray-400 font-medium">🤖 {t.nav.androidSoon}</span>
           </div>
           <LanguageSwitcher />
@@ -113,9 +115,14 @@ export function LandingNavbar() {
             >
               {t.nav.login}
             </Link>
-            <div className="flex items-center justify-center gap-2 bg-gray-100 text-gray-400 py-3 rounded-xl cursor-not-allowed select-none text-sm font-medium">
-              📲 {t.nav.appStoreSoon}
-            </div>
+            <a
+              href="https://apps.apple.com/app/arnaquescan/id6786055299"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 bg-gray-900 text-white py-3 rounded-xl text-sm font-medium"
+            >
+              📲 {t.nav.appStoreCta}
+            </a>
             <div className="flex items-center justify-center gap-2 bg-gray-100 text-gray-400 py-3 rounded-xl cursor-not-allowed select-none text-sm font-medium">
               🤖 {t.nav.googlePlaySoon}
             </div>
