@@ -1,5 +1,5 @@
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
-import { adminAuth, adminDb } from "./firebaseAdmin.js";
+import { adminDb } from "./firebaseAdmin.js";
 
 const TRIAL_DAYS = 7;
 export const FREE_MONTHLY_QUOTA = 3;
@@ -20,24 +20,38 @@ function nextMonthFirstDayIso(): string {
 
 /**
  * Enforces the freemium funnel for a signed-in caller: unlimited during the
- * first TRIAL_DAYS since account creation, then capped at FREE_MONTHLY_QUOTA
- * analyses/month unless the RevenueCat "premium" entitlement is active
- * (synced into Firestore by api/revenuecat-webhook.ts / api/subscription-sync.ts).
+ * first TRIAL_DAYS since this uid's first-ever analyze call, then capped at
+ * FREE_MONTHLY_QUOTA analyses/month unless the RevenueCat "premium"
+ * entitlement is active (synced into Firestore by api/revenuecat-webhook.ts
+ * / api/subscription-sync.ts).
+ *
+ * Trial start is the Firestore doc's own `createdAt` (lazily set below) —
+ * NOT Firebase Auth's account-creation timestamp. Reading that requires
+ * `firebase-admin/auth`, which transitively depends on `jwks-rsa`, which
+ * bundles a broken jose@4 build that crashes under Node's ESM loader on
+ * Vercel (ERR_REQUIRE_ESM). Anchoring the trial to "first analyze call"
+ * instead of "account creation" sidesteps that dependency entirely — the
+ * two only differ if a user waits before their first analysis, which just
+ * means their trial starts a little later, not an exploitable gap.
  */
 export async function checkQuota(uid: string): Promise<QuotaResult> {
-  const fbUser = await adminAuth().getUser(uid);
-  const createdMs = new Date(fbUser.metadata.creationTime).getTime();
-  const trialEndsMs = createdMs + TRIAL_DAYS * 24 * 60 * 60 * 1000;
-  if (Date.now() < trialEndsMs) {
-    return { allowed: true, reason: "trial" };
-  }
-
   const monthKey = currentMonthKey();
   const ref = adminDb().collection("users").doc(uid);
 
   return adminDb().runTransaction(async (tx): Promise<QuotaResult> => {
     const snap = await tx.get(ref);
     const data = snap.data();
+
+    const createdAt = data?.createdAt as Timestamp | undefined;
+    const createdMs = createdAt ? createdAt.toMillis() : Date.now();
+    const isTrial = Date.now() < createdMs + TRIAL_DAYS * 24 * 60 * 60 * 1000;
+
+    if (isTrial) {
+      if (!snap.exists) {
+        tx.set(ref, { createdAt: FieldValue.serverTimestamp() }, { merge: true });
+      }
+      return { allowed: true, reason: "trial" };
+    }
 
     const premiumExpiresAt = data?.premiumExpiresAt as Timestamp | undefined;
     const isPremium = data?.premium === true && (!premiumExpiresAt || premiumExpiresAt.toMillis() > Date.now());
