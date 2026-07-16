@@ -56,6 +56,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
+  console.log(`[revenuecat-webhook] received type=${event.type} app_user_id=${event.app_user_id}`);
+
   if (!PREMIUM_ON.has(event.type) && !PREMIUM_OFF.has(event.type)) {
     // Unhandled event type (e.g. TRANSFER, BILLING_ISSUE) — ack so RevenueCat
     // doesn't retry, but there's nothing for us to update.
@@ -80,6 +82,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         },
         { merge: true }
       );
+    console.log(`[revenuecat-webhook] wrote users/${event.app_user_id} premium=${premium}`);
   } catch (err) {
     console.error("[revenuecat-webhook] Firestore write failed:", err);
     // Still 200: RevenueCat retries on non-2xx and we don't want infinite
