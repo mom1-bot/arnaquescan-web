@@ -43,9 +43,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const authHeader = req.headers.authorization ?? "";
   const receivedSecret = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : authHeader;
   if (!WEBHOOK_SECRET || receivedSecret !== WEBHOOK_SECRET) {
-    console.error(
-      `[revenuecat-webhook] auth mismatch — header present: ${!!req.headers.authorization}, header length: ${authHeader.length}, expected length: ${WEBHOOK_SECRET?.length ?? 0}`
-    );
     res.status(401).json({ error: true, code: "unauthorized" });
     return;
   }
@@ -55,8 +52,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.status(400).json({ error: true, code: "bad_request" });
     return;
   }
-
-  console.log(`[revenuecat-webhook] received type=${event.type} app_user_id=${event.app_user_id}`);
 
   if (!PREMIUM_ON.has(event.type) && !PREMIUM_OFF.has(event.type)) {
     // Unhandled event type (e.g. TRANSFER, BILLING_ISSUE) — ack so RevenueCat
@@ -82,7 +77,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         },
         { merge: true }
       );
-    console.log(`[revenuecat-webhook] wrote users/${event.app_user_id} premium=${premium}`);
   } catch (err) {
     console.error("[revenuecat-webhook] Firestore write failed:", err);
     // Still 200: RevenueCat retries on non-2xx and we don't want infinite
