@@ -36,7 +36,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  if (!WEBHOOK_SECRET || req.headers.authorization !== `Bearer ${WEBHOOK_SECRET}`) {
+  // RevenueCat's dashboard field for this varies by account/version: some let
+  // you type the full "Bearer <secret>" value, others just take the raw
+  // secret and send it verbatim. Accept either so a dashboard-side mismatch
+  // in that convention doesn't reject legitimate calls.
+  const authHeader = req.headers.authorization ?? "";
+  const receivedSecret = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : authHeader;
+  if (!WEBHOOK_SECRET || receivedSecret !== WEBHOOK_SECRET) {
+    console.error(
+      `[revenuecat-webhook] auth mismatch — header present: ${!!req.headers.authorization}, header length: ${authHeader.length}, expected length: ${WEBHOOK_SECRET?.length ?? 0}`
+    );
     res.status(401).json({ error: true, code: "unauthorized" });
     return;
   }
