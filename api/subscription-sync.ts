@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
-import { adminDb } from "./_lib/firebaseAdmin";
-import { verifyFirebaseToken } from "./_lib/firebaseAuth";
+import { adminDb } from "./_lib/firebaseAdmin.js";
+import { verifyFirebaseToken } from "./_lib/firebaseAuth.js";
 
 // Must match the entitlement identifier configured in the RevenueCat dashboard.
 const ENTITLEMENT_ID = "ArnaqueScan Pro";

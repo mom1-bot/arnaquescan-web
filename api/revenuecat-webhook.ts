@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
-import { adminDb } from "./_lib/firebaseAdmin";
+import { adminDb } from "./_lib/firebaseAdmin.js";
 
 // Configured in the RevenueCat dashboard (Project Settings > Integrations >
 // Webhooks) as the value of a custom "Authorization" header sent with every

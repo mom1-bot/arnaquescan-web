@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Redis } from "@upstash/redis";
-import { verifyFirebaseToken } from "./_lib/firebaseAuth";
-import { checkQuota, type QuotaResult } from "./_lib/quota";
+import { verifyFirebaseToken } from "./_lib/firebaseAuth.js";
+import { checkQuota, type QuotaResult } from "./_lib/quota.js";
 
 // Set by Vercel when a Redis store (Upstash marketplace integration) is linked to this project.
 const kv = new Redis({

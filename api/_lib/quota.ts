@@ -1,5 +1,5 @@
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
-import { adminAuth, adminDb } from "./firebaseAdmin";
+import { adminAuth, adminDb } from "./firebaseAdmin.js";
 
 const TRIAL_DAYS = 7;
 export const FREE_MONTHLY_QUOTA = 3;
