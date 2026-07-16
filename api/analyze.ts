@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { createRemoteJWKSet, jwtVerify } from "jose";
 import { Redis } from "@upstash/redis";
+import { verifyFirebaseToken } from "./_lib/firebaseAuth";
+import { checkQuota, type QuotaResult } from "./_lib/quota";
 
 // Set by Vercel when a Redis store (Upstash marketplace integration) is linked to this project.
 const kv = new Redis({
@@ -11,20 +12,15 @@ const kv = new Redis({
 // Keep these prompt strings in sync with ArnaqueScan/constants/translations.ts
 // and ArnaqueScan/app/(tabs)/index.tsx (separate repo, no shared package).
 
-const FIREBASE_PROJECT_ID = "arnaquescan";
 const ANTHROPIC_MODEL = "claude-haiku-4-5";
 const MAX_IMAGE_BASE64_LENGTH = 10_000_000; // ~7.3MB decoded
 
 // Anonymous (no Firebase account) callers — e.g. the web app's free tier — are
 // capped per IP via Redis (Upstash), matching the site's "3 free analyses"
-// tier. Signed-in callers (mobile app, logged-in web users) are trusted and
-// unlimited here, matching the product's "unlimited with an account" promise.
+// tier. Signed-in callers get the freemium funnel instead (see checkQuota in
+// ./_lib/quota.ts): unlimited for a 7-day trial, then 3/month unless Premium.
 const ANON_RATE_LIMIT_MAX = 3;
 const ANON_RATE_LIMIT_WINDOW_SECONDS = 60 * 60 * 24;
-
-const JWKS = createRemoteJWKSet(
-  new URL("https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com")
-);
 
 type LangCode = "fr" | "en" | "es" | "nl" | "de";
 type MsgType = "email" | "sms" | "whatsapp" | "lien" | "phone" | "qrcode";
@@ -187,15 +183,6 @@ Reply ONLY in valid JSON without markdown. The "verdict" field must be one of: A
 Format: ${JSON_FORMAT}`;
 }
 
-async function verifyFirebaseToken(token: string): Promise<string> {
-  const { payload } = await jwtVerify(token, JWKS, {
-    issuer: `https://securetoken.google.com/${FIREBASE_PROJECT_ID}`,
-    audience: FIREBASE_PROJECT_ID,
-  });
-  if (!payload.sub) throw new Error("invalid_token");
-  return payload.sub;
-}
-
 function clientIp(req: VercelRequest): string {
   const forwarded = req.headers["x-forwarded-for"];
   const value = Array.isArray(forwarded) ? forwarded[0] : forwarded;
@@ -230,15 +217,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const authHeader = req.headers.authorization;
   const bearerToken = authHeader?.startsWith("Bearer ") ? authHeader.slice(7) : undefined;
 
+  // Populated only for signed-in callers whose request was allowed, so the
+  // success response can surface remaining quota without a second round trip.
+  let quotaInfo: { reason: string; used: number | null; limit: number | null } | null = null;
+
   if (bearerToken) {
     // A token was supplied: it must be valid. We don't silently fall back to
     // anonymous on a bad token — that would mask expired-session bugs as rate limits.
+    let uid: string;
     try {
-      await verifyFirebaseToken(bearerToken);
+      uid = await verifyFirebaseToken(bearerToken);
     } catch {
       res.status(401).json({ error: true, code: "unauthorized" });
       return;
     }
+
+    let quota: QuotaResult;
+    try {
+      quota = await checkQuota(uid);
+    } catch (err) {
+      console.error("[analyze] quota check failed:", err);
+      res.status(503).json({ error: true, code: "service_unavailable" });
+      return;
+    }
+    if (!quota.allowed) {
+      res.status(403).json({
+        error: true,
+        code: "quota_exceeded",
+        used: quota.used,
+        limit: quota.limit,
+        resetsAt: quota.resetsAt,
+      });
+      return;
+    }
+    quotaInfo = { reason: quota.reason, used: quota.used ?? null, limit: quota.limit ?? null };
   } else {
     // No account: anonymous free-tier usage, capped per IP.
     let underLimit: boolean;
@@ -341,7 +353,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const data = (await anthropicResponse.json()) as { content: { text?: string }[] };
     const raw = data.content.map((c) => c.text ?? "").join("");
     const parsed = JSON.parse(raw.replace(/```json|```/g, "").trim());
-    res.status(200).json(parsed);
+    res.status(200).json({ ...parsed, _quota: quotaInfo });
   } catch (err) {
     console.error("[analyze] Failed to parse Anthropic response:", err);
     res.status(502).json({ error: true, code: "upstream_error" });
