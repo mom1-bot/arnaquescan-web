@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 const APP_STORE_URL = "https://apps.apple.com/app/arnaquescan/id6786055299";
@@ -38,7 +38,33 @@ const FAMILLE_FEATURES = [
 
 export default function Subscription() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [annual, setAnnual] = useState(false);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  const handleCheckout = async () => {
+    if (!user) {
+      navigate("/auth?mode=register");
+      return;
+    }
+    setCheckoutError(null);
+    setCheckoutLoading(true);
+    try {
+      const token = await user.getIdToken();
+      const res = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ plan: annual ? "annual" : "monthly" }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.code ?? "unknown_error");
+      window.location.href = data.url;
+    } catch {
+      setCheckoutError("Impossible de démarrer le paiement. Réessayez dans un instant.");
+      setCheckoutLoading(false);
+    }
+  };
 
   return (
     <div className="bg-sand min-h-screen py-10">
@@ -178,21 +204,31 @@ export default function Subscription() {
               ))}
             </ul>
 
-            <a
-              href={APP_STORE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-center py-3.5 text-sm font-bold text-white rounded-xl transition-opacity hover:opacity-90"
+            <button
+              onClick={handleCheckout}
+              disabled={checkoutLoading}
+              className="block w-full text-center py-3.5 text-sm font-bold text-white rounded-xl transition-opacity hover:opacity-90 disabled:opacity-60"
               style={{
                 background: "linear-gradient(135deg, #1A6FC4, #1254A0)",
                 boxShadow: "0 6px 20px rgba(26,111,196,0.32)",
               }}
             >
-              Télécharger sur l'App Store
-            </a>
+              {checkoutLoading ? "Redirection..." : "S'abonner par carte bancaire"}
+            </button>
+            {checkoutError && (
+              <p className="text-center text-xs text-warning mt-2">{checkoutError}</p>
+            )}
             <p className="text-center text-[10px] text-gray-400 mt-2.5">
-              Annulation possible à tout moment
+              Paiement sécurisé par Stripe · Annulation possible à tout moment
             </p>
+            <a
+              href={APP_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-center py-2.5 text-xs font-semibold text-gray-500 hover:text-gray-700 transition-colors mt-1"
+            >
+              ou via l'app mobile (App Store)
+            </a>
           </div>
 
           {/* Pro */}
@@ -303,9 +339,10 @@ export default function Subscription() {
         {/* Stripe notice */}
         <div className="mt-10 bg-white rounded-2xl border border-gray-100 p-6 text-center max-w-2xl mx-auto">
           <div className="text-2xl mb-2">🔒</div>
-          <h3 className="font-bold text-gray-900 mb-1">Paiement sécurisé à venir</h3>
+          <h3 className="font-bold text-gray-900 mb-1">Paiement 100% sécurisé</h3>
           <p className="text-sm text-gray-500 max-w-sm mx-auto">
-            Les plans payants seront disponibles prochainement via Stripe. Inscrivez-vous maintenant pour être notifié en priorité.
+            Les paiements sont traités par Stripe, leader mondial du paiement en ligne.
+            ArnaqueScan ne stocke jamais vos coordonnées bancaires.
           </p>
           {!user && (
             <Link

@@ -7,6 +7,8 @@ import Analyze      from "./pages/Analyze";
 import History      from "./pages/History";
 import Profile      from "./pages/Profile";
 import Subscription from "./pages/Subscription";
+import SubscriptionSuccess from "./pages/SubscriptionSuccess";
+import SubscriptionCancel  from "./pages/SubscriptionCancel";
 import Auth         from "./pages/Auth";
 import Legal        from "./pages/Legal";
 import CGU          from "./pages/CGU";
@@ -33,7 +35,9 @@ export default function App() {
         <Route element={<AppLayout />}>
           <Route path="/analyser"   element={<Analyze />} />
           <Route path="/auth"       element={<Auth />} />
-          <Route path="/abonnement" element={<Subscription />} />
+          <Route path="/abonnement"       element={<Subscription />} />
+          <Route path="/abonnement/succes" element={<ProtectedRoute><SubscriptionSuccess /></ProtectedRoute>} />
+          <Route path="/abonnement/annule" element={<SubscriptionCancel />} />
           <Route path="/historique" element={<ProtectedRoute><History /></ProtectedRoute>} />
           <Route path="/profil"     element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/mentions-legales" element={<Legal />} />
