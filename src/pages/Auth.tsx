@@ -4,12 +4,16 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
   sendPasswordResetEmail,
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import { LogoIcon } from "../components/LogoIcon";
+
+const googleProvider = new GoogleAuthProvider();
 
 export default function Auth() {
   const { user }                = useAuth();
@@ -23,6 +27,7 @@ export default function Auth() {
   const [password, setPassword] = useState("");
   const [error, setError]       = useState<string | null>(null);
   const [loading, setLoading]   = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [resetSent, setResetSent] = useState(false);
 
   useEffect(() => {
@@ -59,6 +64,25 @@ export default function Auth() {
       setError(messages[code] ?? "Une erreur est survenue. Réessayez.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setError(null);
+    setGoogleLoading(true);
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err: unknown) {
+      const code = (err as { code?: string }).code ?? "";
+      if (code === "auth/popup-closed-by-user" || code === "auth/cancelled-popup-request") {
+        // L'utilisateur a fermé la fenêtre — rien à afficher.
+      } else if (code === "auth/account-exists-with-different-credential") {
+        setError("Un compte existe déjà avec cet email via une autre méthode de connexion.");
+      } else {
+        setError("Impossible de se connecter avec Google. Réessayez.");
+      }
+    } finally {
+      setGoogleLoading(false);
     }
   };
 
@@ -99,6 +123,40 @@ export default function Auth() {
           </div>
         ) : (
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            {error && (
+              <div className="bg-red-50 border border-danger/30 rounded-xl px-4 py-2.5 text-sm text-danger flex gap-2 mb-4">
+                <span>⚠️</span> {error}
+              </div>
+            )}
+
+            {mode !== "reset" && (
+              <>
+                <button
+                  type="button"
+                  onClick={handleGoogleSignIn}
+                  disabled={googleLoading}
+                  className="w-full flex items-center justify-center gap-2.5 py-3 border border-gray-200 rounded-xl font-semibold text-sm text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-60 mb-4"
+                >
+                  {googleLoading ? (
+                    <span className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+                  ) : (
+                    <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                      <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.57 2.7-3.88 2.7-6.62z"/>
+                      <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.83.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.33A9 9 0 0 0 9 18z"/>
+                      <path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.68 9c0-.59.1-1.17.27-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l2.99-2.33z"/>
+                      <path fill="#EA4335" d="M9 3.58c1.32 0 2.51.46 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l2.99 2.33C4.66 5.17 6.65 3.58 9 3.58z"/>
+                    </svg>
+                  )}
+                  Continuer avec Google
+                </button>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="flex-1 h-px bg-gray-100" />
+                  <span className="text-xs text-gray-400 font-medium">ou</span>
+                  <div className="flex-1 h-px bg-gray-100" />
+                </div>
+              </>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-4">
               {mode === "register" && (
                 <div>
@@ -137,12 +195,6 @@ export default function Auth() {
                     minLength={6}
                     className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue/50 focus:ring-2 focus:ring-blue/10 transition-all"
                   />
-                </div>
-              )}
-
-              {error && (
-                <div className="bg-red-50 border border-danger/30 rounded-xl px-4 py-2.5 text-sm text-danger flex gap-2">
-                  <span>⚠️</span> {error}
                 </div>
               )}
 

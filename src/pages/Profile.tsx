@@ -1,6 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import { useState } from "react";
-import { signOut, deleteUser, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
+import {
+  signOut,
+  deleteUser,
+  EmailAuthProvider,
+  GoogleAuthProvider,
+  reauthenticateWithCredential,
+  reauthenticateWithPopup,
+} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
@@ -15,25 +22,35 @@ export default function Profile() {
 
   if (!user) return null;
 
+  const isGoogleUser = user.providerData.some((p) => p.providerId === "google.com");
+
   const handleSignOut = async () => {
     await signOut(auth);
     navigate("/");
   };
 
   const handleDeleteAccount = async () => {
-    if (!password.trim()) {
+    if (!isGoogleUser && !password.trim()) {
       setDeleteError("Veuillez entrer votre mot de passe pour confirmer.");
       return;
     }
     setDeleting(true);
     setDeleteError(null);
     try {
-      const credential = EmailAuthProvider.credential(user.email!, password);
-      await reauthenticateWithCredential(user, credential);
+      if (isGoogleUser) {
+        await reauthenticateWithPopup(user, new GoogleAuthProvider());
+      } else {
+        const credential = EmailAuthProvider.credential(user.email!, password);
+        await reauthenticateWithCredential(user, credential);
+      }
       await deleteUser(user);
       navigate("/");
     } catch {
-      setDeleteError("Mot de passe incorrect ou session expirée. Reconnectez-vous et réessayez.");
+      setDeleteError(
+        isGoogleUser
+          ? "La reconnexion Google a échoué. Réessayez."
+          : "Mot de passe incorrect ou session expirée. Reconnectez-vous et réessayez."
+      );
     } finally {
       setDeleting(false);
     }
@@ -103,15 +120,20 @@ export default function Profile() {
           ) : (
             <div>
               <p className="text-sm text-gray-600 mb-4">
-                Cette action est <strong>irréversible</strong>. Toutes vos données seront supprimées. Entrez votre mot de passe pour confirmer.
+                Cette action est <strong>irréversible</strong>. Toutes vos données seront supprimées.{" "}
+                {isGoogleUser
+                  ? "Confirmez via votre compte Google pour continuer."
+                  : "Entrez votre mot de passe pour confirmer."}
               </p>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Mot de passe actuel"
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm mb-3 focus:outline-none focus:border-danger/50 focus:ring-2 focus:ring-danger/10"
-              />
+              {!isGoogleUser && (
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Mot de passe actuel"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm mb-3 focus:outline-none focus:border-danger/50 focus:ring-2 focus:ring-danger/10"
+                />
+              )}
               {deleteError && (
                 <p className="text-xs text-danger mb-3">⚠️ {deleteError}</p>
               )}
@@ -127,7 +149,7 @@ export default function Profile() {
                   disabled={deleting}
                   className="flex-1 py-2.5 text-sm font-bold text-white bg-danger rounded-xl hover:bg-danger/90 transition-colors disabled:opacity-60"
                 >
-                  {deleting ? "Suppression…" : "Supprimer définitivement"}
+                  {deleting ? "Suppression…" : isGoogleUser ? "Confirmer avec Google" : "Supprimer définitivement"}
                 </button>
               </div>
             </div>
