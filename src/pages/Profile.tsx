@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   signOut,
   deleteUser,
@@ -8,9 +8,17 @@ import {
   reauthenticateWithCredential,
   reauthenticateWithPopup,
 } from "firebase/auth";
+import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
+
+const APP_STORE_SUBSCRIPTIONS_URL = "https://apps.apple.com/account/subscriptions";
+
+interface SubscriptionInfo {
+  premium: boolean;
+  expiresAt: Date | null;
+}
 
 export default function Profile() {
   const { user } = useAuth();
@@ -19,6 +27,31 @@ export default function Profile() {
   const [password, setPassword]                   = useState("");
   const [deleteError, setDeleteError]             = useState<string | null>(null);
   const [deleting, setDeleting]                   = useState(false);
+  const [subscription, setSubscription]           = useState<SubscriptionInfo | null>(null);
+  const [subLoading, setSubLoading]               = useState(true);
+
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const snap = await getDoc(doc(db, "users", user.uid));
+        const data = snap.data();
+        const premiumExpiresAt = data?.premiumExpiresAt as Timestamp | undefined;
+        const isPremium = data?.premium === true && (!premiumExpiresAt || premiumExpiresAt.toMillis() > Date.now());
+        if (!cancelled) {
+          setSubscription({ premium: isPremium, expiresAt: premiumExpiresAt?.toDate() ?? null });
+        }
+      } catch {
+        if (!cancelled) setSubscription({ premium: false, expiresAt: null });
+      } finally {
+        if (!cancelled) setSubLoading(false);
+      }
+    })();
+
+    return () => { cancelled = true; };
+  }, [user]);
 
   if (!user) return null;
 
@@ -83,12 +116,30 @@ export default function Profile() {
               <p className="text-sm font-semibold text-gray-900">{user.email}</p>
             </div>
             <div>
+              <p className="text-xs text-gray-400 mb-0.5">Prénom</p>
+              <p className="text-sm font-semibold text-gray-900">{user.displayName || "—"}</p>
+            </div>
+            <div>
               <p className="text-xs text-gray-400 mb-0.5">Membre depuis</p>
               <p className="text-sm font-semibold text-gray-900">{joined}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-400 mb-0.5">Plan</p>
-              <span className="inline-block text-xs font-bold px-2.5 py-1 bg-blue/10 text-blue rounded-full">Gratuit</span>
+              <p className="text-xs text-gray-400 mb-1">Abonnement</p>
+              {subLoading ? (
+                <div className="h-6 w-20 bg-gray-100 rounded-full animate-pulse" />
+              ) : subscription?.premium ? (
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="inline-block text-xs font-bold px-2.5 py-1 bg-blue text-white rounded-full">Premium</span>
+                  {subscription.expiresAt && (
+                    <span className="text-xs text-gray-400">
+                      jusqu'au{" "}
+                      {subscription.expiresAt.toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" })}
+                    </span>
+                  )}
+                </div>
+              ) : (
+                <span className="inline-block text-xs font-bold px-2.5 py-1 bg-gray-100 text-gray-500 rounded-full">Gratuit</span>
+              )}
             </div>
           </div>
         </div>
@@ -97,6 +148,14 @@ export default function Profile() {
         <div className="bg-white rounded-2xl border border-gray-100 p-6 mb-4">
           <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Actions</h2>
           <div className="space-y-3">
+            <a
+              href={APP_STORE_SUBSCRIPTIONS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-center py-3 text-sm font-bold text-white bg-blue rounded-xl hover:bg-blue/90 transition-colors"
+            >
+              Gérer mon abonnement
+            </a>
             <button
               onClick={handleSignOut}
               className="w-full py-3 text-sm font-semibold text-gray-700 border border-gray-200 rounded-xl hover:border-gray-300 hover:text-gray-900 transition-colors"
