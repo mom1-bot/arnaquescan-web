@@ -13,6 +13,7 @@ import SubscriptionCancel  from "./pages/SubscriptionCancel";
 import Auth         from "./pages/Auth";
 import Legal        from "./pages/Legal";
 import CGU          from "./pages/CGU";
+import NotFound     from "./pages/NotFound";
 
 function AppLayout() {
   return (
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/profil"     element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/mentions-legales" element={<Legal />} />
           <Route path="/cgu"              element={<CGU />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>

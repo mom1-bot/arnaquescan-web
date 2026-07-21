@@ -9,6 +9,7 @@ const TODAY = new Date().toISOString().split("T")[0];
 
 const ROUTES = [
   { path: "/",           priority: "1.0", changefreq: "weekly"  },
+  { path: "/guides",     priority: "0.8", changefreq: "weekly"  },
   { path: "/analyser",   priority: "0.9", changefreq: "monthly" },
   { path: "/auth",       priority: "0.7", changefreq: "monthly" },
   { path: "/historique", priority: "0.6", changefreq: "monthly" },
