@@ -23,12 +23,17 @@ export default function History() {
   const { user } = useAuth();
   const [entries, setEntries] = useState<HistoryEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) return;
     loadUserHistory(user.uid)
       .then(setEntries)
+      .catch((err) => {
+        console.error("loadUserHistory failed:", err);
+        setLoadError(true);
+      })
       .finally(() => setLoading(false));
   }, [user]);
 
@@ -65,7 +70,13 @@ export default function History() {
           </Link>
         </div>
 
-        {entries.length === 0 ? (
+        {loadError ? (
+          <div className="bg-red-50 border border-danger/30 rounded-2xl p-8 text-center">
+            <div className="text-3xl mb-2">⚠️</div>
+            <p className="text-danger font-semibold mb-1">Impossible de charger votre historique</p>
+            <p className="text-sm text-gray-500">Réessayez dans quelques instants ou contactez le support si le problème persiste.</p>
+          </div>
+        ) : entries.length === 0 ? (
           <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center">
             <div className="text-4xl mb-3">🔍</div>
             <p className="text-gray-700 font-semibold mb-1">Aucune analyse pour l'instant</p>

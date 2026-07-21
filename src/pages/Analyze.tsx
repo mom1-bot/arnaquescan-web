@@ -87,18 +87,24 @@ export default function Analyze() {
       if (!user) incrementFreeCount();
 
       if (user) {
-        await saveAnalysis({
-          userId:      user.uid,
-          messageType: msgType,
-          textSnippet: text.slice(0, 120),
-          hasImage:    !!image,
-          score:       analysis.score,
-          verdict:     analysis.verdict,
-          niveau:      analysis.niveau,
-          résumé:      analysis.résumé,
-          signaux:     analysis.signaux,
-          conseil:     analysis.conseil,
-        });
+        // Best-effort: a history-save failure shouldn't surface as an error
+        // over an analysis that already succeeded and is showing on screen.
+        try {
+          await saveAnalysis({
+            userId:      user.uid,
+            messageType: msgType,
+            textSnippet: text.slice(0, 120),
+            hasImage:    !!image,
+            score:       analysis.score,
+            verdict:     analysis.verdict,
+            niveau:      analysis.niveau,
+            résumé:      analysis.résumé,
+            signaux:     analysis.signaux,
+            conseil:     analysis.conseil,
+          });
+        } catch (saveErr) {
+          console.error("saveAnalysis failed:", saveErr);
+        }
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Une erreur est survenue.");
