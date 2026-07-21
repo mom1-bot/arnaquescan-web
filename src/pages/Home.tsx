@@ -4,6 +4,7 @@ import { HeroSection }        from "../landing/HeroSection";
 import { ReassuranceSection } from "../landing/ReassuranceSection";
 import { SimulatorSection }   from "../landing/SimulatorSection";
 import { FeaturesSection }    from "../landing/FeaturesSection";
+import { QuizVigilance }      from "../landing/QuizVigilance";
 import { HowItWorksSection }  from "../landing/HowItWorksSection";
 import { PricingSection }     from "../landing/PricingSection";
 import { FAQSection }         from "../landing/FAQSection";
@@ -30,6 +31,7 @@ export default function Home() {
       <ReassuranceSection />
       <SimulatorSection />
       <FeaturesSection />
+      <QuizVigilance />
       <HowItWorksSection />
       <PricingSection />
       <FAQSection />

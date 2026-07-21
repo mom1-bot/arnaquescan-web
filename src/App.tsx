@@ -3,6 +3,7 @@ import { Navbar }         from "./components/Navbar";
 import { Footer }         from "./components/Footer";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import Home         from "./pages/Home";
+import Guides       from "./pages/Guides";
 import Analyze      from "./pages/Analyze";
 import History      from "./pages/History";
 import Profile      from "./pages/Profile";
@@ -31,6 +32,7 @@ export default function App() {
       <Routes>
         {/* Landing — self-contained (own Navbar + Footer) */}
         <Route path="/" element={<Home />} />
+        <Route path="/guides" element={<Guides />} />
         {/* App pages — shared Navbar + Footer */}
         <Route element={<AppLayout />}>
           <Route path="/analyser"   element={<Analyze />} />

@@ -9,10 +9,14 @@ export function LandingNavbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen]         = useState(false);
 
-  const NAV_LINKS = [
-    { label: t.nav.features, id: "fonctionnalites" },
-    { label: t.nav.pricing,  id: "tarifs"          },
-    { label: t.nav.faq,      id: "faq"             },
+  const NAV_LINKS: Array<
+    | { type: "scroll"; label: string; id: string }
+    | { type: "link";   label: string; to: string }
+  > = [
+    { type: "scroll", label: t.nav.features, id: "fonctionnalites" },
+    { type: "link",   label: "Guides",       to: "/guides"         },
+    { type: "scroll", label: t.nav.pricing,  id: "tarifs"          },
+    { type: "scroll", label: t.nav.faq,      id: "faq"             },
   ];
 
   useEffect(() => {
@@ -44,15 +48,25 @@ export function LandingNavbar() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-7">
-          {NAV_LINKS.map(({ label, id }) => (
-            <button
-              key={id}
-              onClick={() => goto(id)}
-              className="text-sm font-medium text-gray-600 hover:text-blue transition-colors"
-            >
-              {label}
-            </button>
-          ))}
+          {NAV_LINKS.map((item) =>
+            item.type === "scroll" ? (
+              <button
+                key={item.id}
+                onClick={() => goto(item.id)}
+                className="text-sm font-medium text-gray-600 hover:text-blue transition-colors"
+              >
+                {item.label}
+              </button>
+            ) : (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="text-sm font-medium text-gray-600 hover:text-blue transition-colors"
+              >
+                {item.label}
+              </Link>
+            )
+          )}
         </nav>
 
         {/* Desktop CTAs */}
@@ -97,15 +111,26 @@ export function LandingNavbar() {
       {open && (
         <div className="md:hidden bg-white border-t border-gray-100 px-5 pt-3 pb-5">
           <div className="mb-4">
-            {NAV_LINKS.map(({ label, id }) => (
-              <button
-                key={id}
-                onClick={() => goto(id)}
-                className="flex items-center w-full py-3.5 text-sm font-medium text-gray-700 border-b border-gray-50 last:border-0"
-              >
-                {label}
-              </button>
-            ))}
+            {NAV_LINKS.map((item) =>
+              item.type === "scroll" ? (
+                <button
+                  key={item.id}
+                  onClick={() => goto(item.id)}
+                  className="flex items-center w-full py-3.5 text-sm font-medium text-gray-700 border-b border-gray-50 last:border-0"
+                >
+                  {item.label}
+                </button>
+              ) : (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center w-full py-3.5 text-sm font-medium text-gray-700 border-b border-gray-50 last:border-0"
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
           </div>
           <div className="space-y-2">
             <Link
