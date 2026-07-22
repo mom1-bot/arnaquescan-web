@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import { adminDb } from "./_lib/firebaseAdmin.js";
+import { logError } from "./_lib/sentry.js";
 
 // Configured in the RevenueCat dashboard (Project Settings > Integrations >
 // Webhooks) as the value of a custom "Authorization" header sent with every
@@ -78,7 +79,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         { merge: true }
       );
   } catch (err) {
-    console.error("[revenuecat-webhook] Firestore write failed:", err);
+    await logError("[revenuecat-webhook] Firestore write failed:", err);
     // Still 200: RevenueCat retries on non-2xx and we don't want infinite
     // retries for a transient Firestore hiccup to pile up. Logged for follow-up.
   }

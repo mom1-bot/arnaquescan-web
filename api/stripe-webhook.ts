@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import Stripe from "stripe";
 import { adminDb } from "./_lib/firebaseAdmin.js";
+import { logError } from "./_lib/sentry.js";
 
 // Raw body is required to verify the Stripe signature below.
 export const config = { api: { bodyParser: false } };
@@ -63,7 +64,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const rawBody = await readRawBody(req);
     event = stripe.webhooks.constructEvent(rawBody, signature, STRIPE_WEBHOOK_SECRET);
   } catch (err) {
-    console.error("[stripe-webhook] Signature verification failed:", err);
+    await logError("[stripe-webhook] Signature verification failed:", err);
     res.status(400).json({ error: true, code: "invalid_signature" });
     return;
   }
@@ -103,7 +104,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         break;
     }
   } catch (err) {
-    console.error(`[stripe-webhook] Failed to process ${event.type}:`, err);
+    await logError(`[stripe-webhook] Failed to process ${event.type}:`, err);
     // Still 200: Stripe retries on non-2xx and a transient Firestore hiccup
     // shouldn't cause pile-up of retries. Logged for follow-up.
   }

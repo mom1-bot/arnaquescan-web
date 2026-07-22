@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import { adminDb } from "./_lib/firebaseAdmin.js";
 import { verifyFirebaseToken } from "./_lib/firebaseAuth.js";
+import { logError } from "./_lib/sentry.js";
 
 // Must match the entitlement identifier configured in the RevenueCat dashboard.
 const ENTITLEMENT_ID = "ArnaqueScan Pro";
@@ -54,14 +55,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       headers: { Authorization: `Bearer ${REVENUECAT_SECRET_KEY}` },
     });
   } catch (err) {
-    console.error("[subscription-sync] RevenueCat fetch failed:", err);
+    await logError("[subscription-sync] RevenueCat fetch failed:", err);
     res.status(502).json({ error: true, code: "upstream_error" });
     return;
   }
 
   if (!rcResponse.ok) {
     const errBody = await rcResponse.text().catch(() => "");
-    console.error(`[subscription-sync] RevenueCat returned ${rcResponse.status}:`, errBody);
+    await logError(`[subscription-sync] RevenueCat returned ${rcResponse.status}:`, errBody);
     res.status(502).json({ error: true, code: "upstream_error" });
     return;
   }
@@ -87,7 +88,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         { merge: true }
       );
   } catch (err) {
-    console.error("[subscription-sync] Firestore write failed:", err);
+    await logError("[subscription-sync] Firestore write failed:", err);
     res.status(503).json({ error: true, code: "service_unavailable" });
     return;
   }

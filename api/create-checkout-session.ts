@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import Stripe from "stripe";
 import { adminDb } from "./_lib/firebaseAdmin.js";
 import { verifyFirebaseIdToken } from "./_lib/firebaseAuth.js";
+import { logError } from "./_lib/sentry.js";
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 
@@ -63,7 +64,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const data = snap.data();
     if (typeof data?.stripeCustomerId === "string") existingCustomerId = data.stripeCustomerId;
   } catch (err) {
-    console.error("[create-checkout-session] Firestore read failed:", err);
+    await logError("[create-checkout-session] Firestore read failed:", err);
     // Non-fatal: Stripe will just create a fresh customer for this session.
   }
 
@@ -95,7 +96,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       cancel_url: `${origin}/abonnement/annule`,
     });
   } catch (err) {
-    console.error("[create-checkout-session] Stripe session creation failed:", err);
+    await logError("[create-checkout-session] Stripe session creation failed:", err);
     res.status(502).json({ error: true, code: "upstream_error" });
     return;
   }

@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Redis } from "@upstash/redis";
 import { verifyFirebaseToken } from "./_lib/firebaseAuth.js";
 import { checkQuota, type QuotaResult } from "./_lib/quota.js";
+import { logError } from "./_lib/sentry.js";
 
 // Set by Vercel when a Redis store (Upstash marketplace integration) is linked to this project.
 const kv = new Redis({
@@ -236,7 +237,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     try {
       quota = await checkQuota(uid);
     } catch (err) {
-      console.error("[analyze] quota check failed:", err);
+      await logError("[analyze] quota check failed:", err);
       res.status(503).json({ error: true, code: "service_unavailable" });
       return;
     }
@@ -342,14 +343,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }),
     });
   } catch (err) {
-    console.error("[analyze] Anthropic fetch failed:", err);
+    await logError("[analyze] Anthropic fetch failed:", err);
     res.status(502).json({ error: true, code: "upstream_error" });
     return;
   }
 
   if (!anthropicResponse.ok) {
     const errBody = await anthropicResponse.text().catch(() => "");
-    console.error(`[analyze] Anthropic returned ${anthropicResponse.status}:`, errBody);
+    await logError(`[analyze] Anthropic returned ${anthropicResponse.status}:`, errBody);
     res.status(502).json({ error: true, code: "upstream_error" });
     return;
   }
@@ -360,7 +361,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const parsed = JSON.parse(raw.replace(/```json|```/g, "").trim());
     res.status(200).json({ ...parsed, _quota: quotaInfo });
   } catch (err) {
-    console.error("[analyze] Failed to parse Anthropic response:", err);
+    await logError("[analyze] Failed to parse Anthropic response:", err);
     res.status(502).json({ error: true, code: "upstream_error" });
   }
 }
