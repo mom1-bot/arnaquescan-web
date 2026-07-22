@@ -5,7 +5,9 @@ const TRIAL_DAYS = 7;
 export const FREE_MONTHLY_QUOTA = 3;
 
 export type QuotaResult =
-  | { allowed: true; reason: "trial" | "premium" | "under_quota"; used?: number; limit?: number }
+  | { allowed: true; reason: "trial"; trialEndsAt: string }
+  | { allowed: true; reason: "premium" }
+  | { allowed: true; reason: "under_quota"; used: number; limit: number }
   | { allowed: false; used: number; limit: number; resetsAt: string };
 
 function currentMonthKey(): string {
@@ -50,7 +52,8 @@ export async function checkQuota(uid: string): Promise<QuotaResult> {
       if (!snap.exists) {
         tx.set(ref, { createdAt: FieldValue.serverTimestamp() }, { merge: true });
       }
-      return { allowed: true, reason: "trial" };
+      const trialEndsAt = new Date(createdMs + TRIAL_DAYS * 24 * 60 * 60 * 1000).toISOString();
+      return { allowed: true, reason: "trial", trialEndsAt };
     }
 
     const premiumExpiresAt = data?.premiumExpiresAt as Timestamp | undefined;

@@ -1,9 +1,12 @@
 import { Helmet } from "react-helmet-async";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
-import { runAnalysis } from "../utils/analyze";
+import { runAnalysis, QuotaExceededError } from "../utils/analyze";
 import { saveAnalysis } from "../utils/firestoreHistory";
+import { computeTrialStatus, type TrialStatus } from "../utils/trialStatus";
 import { AnalysisResultCard } from "../components/AnalysisResult";
 import type { AnalysisResult, MessageType } from "../types";
 
@@ -36,10 +39,23 @@ export default function Analyze() {
   const [loading, setLoading]     = useState(false);
   const [error, setError]         = useState<string | null>(null);
   const [showLimit, setShowLimit] = useState(false);
+  const [quotaExceeded, setQuotaExceeded] = useState(false);
+  const [quotaStatus, setQuotaStatus] = useState<TrialStatus | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const freeCount = getFreeCount();
   const canAnalyze = user || freeCount < FREE_LIMIT;
+
+  useEffect(() => {
+    if (!user) { setQuotaStatus(null); return; }
+    let cancelled = false;
+    getDoc(doc(db, "users", user.uid))
+      .then((snap) => {
+        if (!cancelled) setQuotaStatus(computeTrialStatus(snap.data(), snap.exists()));
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [user]);
 
   const handleFile = (file: File) => {
     const reader = new FileReader();
@@ -84,6 +100,18 @@ export default function Analyze() {
 
       setResult(analysis);
 
+      if (analysis._quota) {
+        const q = analysis._quota;
+        if (q.reason === "premium") {
+          setQuotaStatus({ kind: "premium" });
+        } else if (q.reason === "trial" && q.trialEndsAt) {
+          const daysLeft = Math.max(1, Math.ceil((new Date(q.trialEndsAt).getTime() - Date.now()) / (24 * 60 * 60 * 1000)));
+          setQuotaStatus({ kind: "trial", daysLeft });
+        } else if (q.reason === "under_quota" && q.used != null && q.limit != null) {
+          setQuotaStatus({ kind: "free", used: q.used, limit: q.limit });
+        }
+      }
+
       if (!user) incrementFreeCount();
 
       if (user) {
@@ -107,7 +135,12 @@ export default function Analyze() {
         }
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Une erreur est survenue.");
+      if (err instanceof QuotaExceededError) {
+        setQuotaExceeded(true);
+        setQuotaStatus({ kind: "free", used: err.used, limit: err.limit });
+      } else {
+        setError(err instanceof Error ? err.message : "Une erreur est survenue.");
+      }
     } finally {
       setLoading(false);
     }
@@ -136,11 +169,23 @@ export default function Analyze() {
         <div className="mb-8">
           <h1 className="text-2xl font-black text-gray-900 mb-1">Analyser un contenu</h1>
           <p className="text-sm text-gray-500">
-            {user
-              ? "Analyses illimitées avec votre compte."
-              : `${remainingFree} analyse${remainingFree !== 1 ? "s" : ""} gratuite${remainingFree !== 1 ? "s" : ""} restante${remainingFree !== 1 ? "s" : ""} — `
-            }
-            {!user && <Link to="/auth?mode=register" className="text-blue hover:underline font-medium">Créer un compte pour plus</Link>}
+            {!user && (
+              <>
+                {remainingFree} analyse{remainingFree !== 1 ? "s" : ""} gratuite{remainingFree !== 1 ? "s" : ""} restante{remainingFree !== 1 ? "s" : ""} —{" "}
+                <Link to="/auth?mode=register" className="text-blue hover:underline font-medium">Créer un compte pour plus</Link>
+              </>
+            )}
+            {user && quotaStatus?.kind === "trial" && (
+              <>🎁 Essai gratuit — encore {quotaStatus.daysLeft} jour{quotaStatus.daysLeft !== 1 ? "s" : ""}, analyses illimitées</>
+            )}
+            {user && quotaStatus?.kind === "premium" && <>✨ Premium — analyses illimitées</>}
+            {user && quotaStatus?.kind === "free" && (
+              quotaStatus.used != null && quotaStatus.limit != null ? (
+                <>{Math.max(0, quotaStatus.limit - quotaStatus.used)}/{quotaStatus.limit} analyses gratuites restantes ce mois-ci</>
+              ) : (
+                <>Analyses gratuites limitées à 3/mois</>
+              )
+            )}
           </p>
         </div>
 
@@ -226,7 +271,7 @@ export default function Analyze() {
               </div>
             )}
 
-            {/* Free limit warning */}
+            {/* Free limit warning (anonymous) */}
             {showLimit && (
               <div className="bg-orange-50 border border-warning/40 rounded-xl px-4 py-3 mb-4 text-sm text-gray-700">
                 Vous avez utilisé vos 3 analyses gratuites.{" "}
@@ -234,10 +279,18 @@ export default function Analyze() {
               </div>
             )}
 
+            {/* Monthly quota warning (signed-in, trial over) */}
+            {quotaExceeded && (
+              <div className="bg-orange-50 border border-warning/40 rounded-xl px-4 py-3 mb-4 text-sm text-gray-700">
+                Vous avez utilisé vos 3 analyses gratuites de ce mois.{" "}
+                <Link to="/abonnement" className="text-blue font-semibold hover:underline">Passez Premium</Link> pour continuer sans limite.
+              </div>
+            )}
+
             {/* Analyze button */}
             <button
               onClick={analyze}
-              disabled={loading || (!text.trim() && !image) || showLimit}
+              disabled={loading || (!text.trim() && !image) || showLimit || quotaExceeded}
               className="w-full py-3.5 bg-blue text-white rounded-xl font-bold text-base hover:bg-blue/90 transition-colors shadow-lg shadow-blue/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
             >
               {loading ? (

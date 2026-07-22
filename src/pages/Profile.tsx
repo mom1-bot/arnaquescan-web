@@ -12,13 +12,9 @@ import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
+import { computeTrialStatus, type TrialStatus } from "../utils/trialStatus";
 
 const APP_STORE_SUBSCRIPTIONS_URL = "https://apps.apple.com/account/subscriptions";
-
-interface SubscriptionInfo {
-  premium: boolean;
-  expiresAt: Date | null;
-}
 
 export default function Profile() {
   const { user } = useAuth();
@@ -27,7 +23,8 @@ export default function Profile() {
   const [password, setPassword]                   = useState("");
   const [deleteError, setDeleteError]             = useState<string | null>(null);
   const [deleting, setDeleting]                   = useState(false);
-  const [subscription, setSubscription]           = useState<SubscriptionInfo | null>(null);
+  const [trialStatus, setTrialStatus]             = useState<TrialStatus | null>(null);
+  const [premiumExpiresAt, setPremiumExpiresAt]   = useState<Date | null>(null);
   const [subLoading, setSubLoading]               = useState(true);
 
   useEffect(() => {
@@ -38,13 +35,13 @@ export default function Profile() {
       try {
         const snap = await getDoc(doc(db, "users", user.uid));
         const data = snap.data();
-        const premiumExpiresAt = data?.premiumExpiresAt as Timestamp | undefined;
-        const isPremium = data?.premium === true && (!premiumExpiresAt || premiumExpiresAt.toMillis() > Date.now());
         if (!cancelled) {
-          setSubscription({ premium: isPremium, expiresAt: premiumExpiresAt?.toDate() ?? null });
+          setTrialStatus(computeTrialStatus(data, snap.exists()));
+          const premiumExpiresAtTs = data?.premiumExpiresAt as Timestamp | undefined;
+          setPremiumExpiresAt(premiumExpiresAtTs?.toDate() ?? null);
         }
       } catch {
-        if (!cancelled) setSubscription({ premium: false, expiresAt: null });
+        if (!cancelled) setTrialStatus({ kind: "free" });
       } finally {
         if (!cancelled) setSubLoading(false);
       }
@@ -126,16 +123,23 @@ export default function Profile() {
             <div>
               <p className="text-xs text-gray-400 mb-1">Abonnement</p>
               {subLoading ? (
-                <div className="h-6 w-20 bg-gray-100 rounded-full animate-pulse" />
-              ) : subscription?.premium ? (
+                <div className="h-6 w-24 bg-gray-100 rounded-full animate-pulse" />
+              ) : trialStatus?.kind === "premium" ? (
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="inline-block text-xs font-bold px-2.5 py-1 bg-blue text-white rounded-full">Premium</span>
-                  {subscription.expiresAt && (
+                  {premiumExpiresAt && (
                     <span className="text-xs text-gray-400">
                       jusqu'au{" "}
-                      {subscription.expiresAt.toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" })}
+                      {premiumExpiresAt.toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" })}
                     </span>
                   )}
+                </div>
+              ) : trialStatus?.kind === "trial" ? (
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="inline-block text-xs font-bold px-2.5 py-1 bg-blue/10 text-blue rounded-full">🎁 Essai gratuit</span>
+                  <span className="text-xs text-gray-400">
+                    encore {trialStatus.daysLeft} jour{trialStatus.daysLeft !== 1 ? "s" : ""}
+                  </span>
                 </div>
               ) : (
                 <span className="inline-block text-xs font-bold px-2.5 py-1 bg-gray-100 text-gray-500 rounded-full">Gratuit</span>

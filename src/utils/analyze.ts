@@ -1,5 +1,19 @@
 import type { AnalysisResult, MessageType } from "../types";
 
+export class QuotaExceededError extends Error {
+  used: number;
+  limit: number;
+  resetsAt: string | null;
+
+  constructor(used: number, limit: number, resetsAt: string | null) {
+    super("quota_exceeded");
+    this.name = "QuotaExceededError";
+    this.used = used;
+    this.limit = limit;
+    this.resetsAt = resetsAt;
+  }
+}
+
 export async function runAnalysis(opts: {
   msgType: MessageType;
   text: string;
@@ -29,6 +43,15 @@ export async function runAnalysis(opts: {
   }
   if (response.status === 401) {
     throw new Error("Votre session a expiré. Reconnectez-vous et réessayez.");
+  }
+  if (response.status === 403) {
+    const body = (await response.json().catch(() => null)) as
+      | { code?: string; used?: number; limit?: number; resetsAt?: string }
+      | null;
+    if (body?.code === "quota_exceeded") {
+      throw new QuotaExceededError(body.used ?? 0, body.limit ?? 3, body.resetsAt ?? null);
+    }
+    throw new Error("Erreur lors de l'analyse. Réessayez.");
   }
   if (!response.ok) {
     throw new Error("Erreur lors de l'analyse. Réessayez.");

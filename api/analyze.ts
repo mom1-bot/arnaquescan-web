@@ -219,7 +219,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // Populated only for signed-in callers whose request was allowed, so the
   // success response can surface remaining quota without a second round trip.
-  let quotaInfo: { reason: string; used: number | null; limit: number | null } | null = null;
+  let quotaInfo: { reason: string; used: number | null; limit: number | null; trialEndsAt: string | null } | null = null;
 
   if (bearerToken) {
     // A token was supplied: it must be valid. We don't silently fall back to
@@ -250,7 +250,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
       return;
     }
-    quotaInfo = { reason: quota.reason, used: quota.used ?? null, limit: quota.limit ?? null };
+    quotaInfo = {
+      reason: quota.reason,
+      used: quota.reason === "under_quota" ? quota.used : null,
+      limit: quota.reason === "under_quota" ? quota.limit : null,
+      trialEndsAt: quota.reason === "trial" ? quota.trialEndsAt : null,
+    };
   } else {
     // No account: anonymous free-tier usage, capped per IP.
     let underLimit: boolean;
