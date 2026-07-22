@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { Analytics }      from "@vercel/analytics/react";
 import { Navbar }         from "./components/Navbar";
 import { Footer }         from "./components/Footer";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -48,6 +49,7 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 }
