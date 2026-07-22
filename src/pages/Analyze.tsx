@@ -51,7 +51,7 @@ export default function Analyze() {
     let cancelled = false;
     getDoc(doc(db, "users", user.uid))
       .then((snap) => {
-        if (!cancelled) setQuotaStatus(computeTrialStatus(snap.data(), snap.exists()));
+        if (!cancelled) setQuotaStatus(computeTrialStatus(snap.data()));
       })
       .catch(() => {});
     return () => { cancelled = true; };

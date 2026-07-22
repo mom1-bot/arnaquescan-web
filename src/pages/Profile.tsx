@@ -36,7 +36,7 @@ export default function Profile() {
         const snap = await getDoc(doc(db, "users", user.uid));
         const data = snap.data();
         if (!cancelled) {
-          setTrialStatus(computeTrialStatus(data, snap.exists()));
+          setTrialStatus(computeTrialStatus(data));
           const premiumExpiresAtTs = data?.premiumExpiresAt as Timestamp | undefined;
           setPremiumExpiresAt(premiumExpiresAtTs?.toDate() ?? null);
         }
